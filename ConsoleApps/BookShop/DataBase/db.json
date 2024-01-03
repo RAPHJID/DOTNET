@@ -1,0 +1,23 @@
+{
+  "Book": [
+    {
+      "Id": 1,
+      "Title": "Atomic Habits",
+      "Price": 20.50
+    }
+  ],
+  "User": [
+    {
+      "Id": 1,
+      "UserName": "Jid",
+      "Password": "7804"
+    }
+  ],
+  "Order": [
+    {
+      "Id": 1,
+      "UserId": 1,
+      "BookId":  1
+    }
+  ]
+}
