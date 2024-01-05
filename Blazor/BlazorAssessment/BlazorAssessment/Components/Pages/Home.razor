@@ -1,0 +1,99 @@
+﻿@using BlazorAssessment.Components.Model
+@page "/"
+
+@* displaying *@
+<ul class="list-group">
+    @foreach (var memory in memories)
+    {
+        <li class="list-group-item">
+            <div>
+                <h5 class="mb-1">@memory.Name</h5>
+                <p class="mb-1">@memory.Description</p>
+                <p class="mb-1">Date: @memory.Date.ToShortDateString()</p>
+                <p class="mb-1">Location: @memory.Location</p>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-warning" @onclick="() => EditMemory(memory)">Edit</button>
+                <button type="button" class="btn btn-danger" @onclick="() => DeleteMemory(memory)">Delete</button>
+            </div>
+        </li>
+    }
+</ul>
+
+@* adding/editing form *@
+<div class="mt-4">
+    <h4>Add/Edit Memory</h4>
+    <form>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" class="form-control" @bind="newMemory.Name" />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" class="form-control" @bind="newMemory.Description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input id="date" type="date" class="form-control" @bind="newMemory.Date" />
+        </div>
+
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input id="location" class="form-control" @bind="newMemory.Location" />
+        </div>
+
+        <button type="button" class="btn btn-primary" @onclick="AddOrUpdateMemory">Save</button>
+    </form>
+</div>
+
+@code {
+    List<Memory> memories = new List<Memory>();
+    Memory newMemory = new Memory();
+
+    public void AddOrUpdateMemory()
+    {
+        if (memories.Contains(newMemory))
+        {
+            @* Finding the existing memory and updating it *@
+           
+            var existingMemory = memories.Find(m => m == newMemory);
+            existingMemory.Name = newMemory.Name;
+            existingMemory.Description = newMemory.Description;
+            existingMemory.Date = newMemory.Date;
+            existingMemory.Location = newMemory.Location;
+        }
+        else
+        {
+            @* Adding the memory if it does nor exist *@
+            
+            memories.Add(new Memory
+                {
+                    Name = newMemory.Name,
+                    Description = newMemory.Description,
+                    Date = newMemory.Date,
+                    Location = newMemory.Location
+                });
+        }
+        @* for clear the form after adding/editing *@
+        
+        newMemory = new Memory();
+    }
+
+    public void EditMemory(Memory memory)
+    {        
+        newMemory = new Memory
+            {
+                Name = memory.Name,
+                Description = memory.Description,
+                Date = memory.Date,
+                Location = memory.Location
+            };
+    }
+
+    public void DeleteMemory(Memory memory)
+    {
+        memories.Remove(memory);
+    }
+}
