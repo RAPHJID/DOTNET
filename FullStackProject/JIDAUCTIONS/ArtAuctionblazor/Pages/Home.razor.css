@@ -1,0 +1,81 @@
+﻿.main
+
+{
+    height: 100vh; 
+    overflow-y: auto; 
+}
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#categories {
+    display: flex;
+    justify-content: space-around;
+    background-color: none;
+    padding: 10px;
+    border-radius: 5px; 
+}
+
+    #categories button {
+        background-color: white; 
+        color: black;
+        border: none;
+        padding: 8px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 3px; 
+    }
+
+        #categories button:hover {
+            background-color: dimgrey; 
+        }
+
+
+button {
+    padding: 10px;
+    margin: 0;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: underline;
+    
+}
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+.category {
+    display: none;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.artItems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.artItem {
+    margin: 10px;
+    text-align: center;
+}
+
+#artContainer {
+    display: flex;
+    flex-wrap: wrap;
+    /*justify-content: center;*/
+}
+.all-arts{
+    float:left;
+    
+}
+.selected-arts{
+    float: right;
+}

@@ -1,0 +1,66 @@
+﻿@page "/user"
+@inject HttpClient Http
+@inject IJSRuntime _jsRuntime
+
+
+<div class="main">
+    @* NavBar *@
+    <UserNav></UserNav>
+    @* Display Arts *@
+    <h2>Discover Physical, Digital and NFT artworks</h2>
+    @* categories buttons *@
+    <div id="categories">
+        @foreach (var category in Categories)
+        {
+            <button @onclick="(() => ShowCategory(category))">@category</button>
+        }
+    </div>
+   @if (selectedCategory == "All")
+    {
+        <div id="artContainer">
+            <div class="all-arts">
+                <MyCategory Category="All" Arts="@Arts" OnArtSelected="HandleArtSelected" />
+            </div>
+        </div>
+    }
+    else{
+    <div id="artContainer">              
+        <div class="selected-arts">
+            <MyCategory Category="@selectedCategory" Arts="@Arts" />
+        </div>
+    </div>
+ 
+    }
+    @* <ArtDetails SelectedArt="selectedArt" /> *@
+</div>
+
+
+@code {
+    public List<Art>? Arts { get; set; }
+    public List<string> Categories { get; set; } = new List<string>();
+    public string selectedCategory = "All"; // default to show all arts
+    public Art selectedArt;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var pic = await Http.GetFromJsonAsync<List<Art>>("sample-data/art.json");
+        if (pic.Any())
+        {
+            Arts = pic;
+        }
+
+        // Extract unique categories
+        Categories = Arts.Select(a => a.Category).Distinct().ToList();
+    }
+
+    public void ShowCategory(string category)
+    {
+        selectedCategory = category;
+    }
+
+
+    public void HandleArtSelected(Art art)
+    {
+        selectedArt = art;
+    }
+}

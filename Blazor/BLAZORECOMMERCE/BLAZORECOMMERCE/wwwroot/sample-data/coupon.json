@@ -1,0 +1,21 @@
+﻿[
+  {
+    "Id": 1,
+    "CouponCode": "10OOF",
+    "CouponAmount": 10000,
+    "CouponMinAmount": 1000
+  },
+  {
+    "Id": 2,
+    "CouponCode": "20OOF",
+    "CouponAmount": 20000,
+    "CouponMinAmount": 2000
+  },
+  {
+    "Id": 1,
+    "CouponCode": "30OOF",
+    "CouponAmount": 30000,
+    "CouponMinAmount": 3000
+  }
+
+]

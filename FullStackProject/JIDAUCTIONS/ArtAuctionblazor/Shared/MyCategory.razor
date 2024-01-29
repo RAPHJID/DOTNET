@@ -1,0 +1,126 @@
+﻿@inject IJSRuntime JSRuntime
+@using ArtAuctionblazor.Models
+
+<div class="category" id="@Category">
+    <h2>@Category</h2>
+    <div class="artItems">
+        @if (Arts != null && DisplayedArts.Any())
+        {
+            var pageSize = 4; // Number of cards per page
+            var totalPages = (int)Math.Ceiling(DisplayedArts.Count() / (double)pageSize);
+
+            for (int page = 1; page <= totalPages; page++)
+            {
+                <div class="page @(page == currentPage ? "" : "d-none")">
+                    @foreach (var art in DisplayedArts.Skip((page - 1) * pageSize).Take(pageSize))
+                    {
+                        <div class="card shadow mb-3" style="max-width: 22rem; max-height: 45rem; overflow: hidden;">
+                            <img src="@art.ImageUrl" class="card-img-top" alt="@art.Name" style="height: 20rem; object-fit: cover;" />
+                            <div class="card-body">
+                                <h5 class="card-title">@art.Name</h5>
+                                <p class="card-text">@art.Description</p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Artist: @art.Artist</li>
+                                <li class="list-group-item">Current Bid: @art.CurrentBid</li>
+                                <li class="list-group-item">End Date: @art.EndDate</li>
+                                <li class="list-group-item">Status: @art.Status</li>
+                            </ul>
+                            <div class="card-body">
+                                <label for="bidAmount">Bid Amount:</label>
+                                <input type="number" id="bidAmount" @bind="art.BidAmount" />
+                            </div>
+                            <div class="card-body">
+                                <button type="button" class="btn btn-primary" @onclick="() => BidArt(art)">Bid Art</button>
+                            </div>
+                            
+                        </div>
+                    }
+                </div>
+            }
+
+            <nav>
+                <ul class="pagination">
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        var pageCopy = i; // Copy the value to avoid closure issues
+                        <li class="page-item @(pageCopy == currentPage ? "active" : "")">
+                            <a class="page-link" @onclick="() => currentPage = pageCopy">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        }
+        else
+        {
+            <p>No arts available for this category.</p>
+        }
+    </div>
+    <style>
+        .card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .page {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* spacing between cards */
+        }
+    </style>
+</div>
+
+
+
+
+<ArtDetails SelectedArt="selectedArt"/>
+
+@code {
+    [Parameter]
+    public string Category { get; set; }
+
+    [Parameter]
+    public List<Art> Arts { get; set; } = new List<Art>();
+
+    [Parameter]
+    public EventCallback<Art> OnArtSelected { get; set; }
+
+    IEnumerable<Art> DisplayedArts => Category == "All" ? Arts : Arts.Where(a => a.Category == Category);
+
+    public void SelectArt(Art art)
+    {
+        OnArtSelected.InvokeAsync(art);
+    }
+    public Art selectedArt;
+    public int currentPage = 1;
+    void BidArt(Art art)
+
+
+
+    {
+        if (art.BidAmount > art.CurrentBid)
+        {
+            // Update the art's bid amount
+            art.CurrentBid = art.BidAmount;
+
+            
+            ShowAlert($"Bid successful! New bid amount: {art.CurrentBid}");
+        }
+        else
+        {
+           
+            ShowAlert("Bid amount must be greater than the current bid.");
+        }
+
+        // Reset the bid amount field after bidding
+        art.BidAmount = 0;
+    }
+
+    // Helper method to show an alert message
+    void ShowAlert(string message)
+    {
+        
+        JSRuntime.InvokeVoidAsync("alert", message);
+    }
+}

@@ -1,0 +1,53 @@
+﻿<!-- SellerSignupForm.razor -->
+@page "/seller"
+@inject NavigationManager Navigation
+<div class="body">
+    <h1>Hello Almost There..<br />
+        Just Some few Details we need!!</h1>
+<div class="container mt-5">
+    <form @onsubmit="SubmitForm">
+        <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your email address">
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Select Role</label>
+            <select class="form-select" id="role" @bind="selectedRole">
+                <option value="bidder">Bidder</option>
+                <option value="seller">Seller</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+</div>
+</div>
+
+@code {
+    private string selectedRole = "bidder";
+
+    private void SubmitForm()
+    {
+        // Perform logic to update user role based on selectedRole
+        // For simplicity, let's just print the selected role for now
+        Console.WriteLine($"User selected role: {selectedRole}");
+
+        // Redirect based on selected role
+        if (selectedRole == "bidder")
+        {
+            Navigation.NavigateTo("/user");
+        }
+        else if (selectedRole == "seller")
+        {
+            Navigation.NavigateTo("/uploadart");
+        }
+    }
+}

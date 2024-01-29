@@ -1,0 +1,45 @@
+﻿.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.modal-content {
+    text-align: center;
+}
+
+.modal button {
+    margin: 0 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+    .modal button.confirm {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+    }
+
+    .modal button.cancel {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+    }
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+    .pagination button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }

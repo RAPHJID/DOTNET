@@ -1,0 +1,139 @@
+﻿/* wwwroot/css/site.css */
+
+/*body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#categories {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px;
+    margin: 0;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+.category {
+    display: none;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.artItems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.artItem {
+    margin: 10px;
+    text-align: center;
+}
+
+#artContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}*/
+/* wwwroot/css/site.css */
+
+/* ... (previous styles) */
+
+.artItems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/*.artItem {
+    margin: 10px;
+    text-align: center;
+    width: 22%;*/ /* Set the width to 22% to allow for some margin */
+    /*box-sizing: border-box;*/ /* Include padding and border in the element's total width and height */
+/*}*/
+
+.artItem {
+    margin: 10px;
+    text-align: center;
+    width: 200px; 
+    height:80vh;
+}
+
+    .artItem img {
+        max-width: 30vw; 
+        height: 20vh; 
+    }
+
+
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination li {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+    .pagination li a {
+        display: block;
+        padding: 8px;
+        text-decoration: none;
+    }
+
+    .pagination li.active a {
+        background-color: #3498db;
+        color: #fff;
+    }
+
+    .pagination li.arrow {
+        font-size: 20px;
+    }
+
+        .pagination li.arrow.prev::before,
+        .pagination li.arrow.next::before {
+            content: '\2190'; 
+            
+        }
+
+
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.page {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+}
+

@@ -1,0 +1,76 @@
+﻿@* @page "/admin"
+@inject NavigationManager Navigation
+
+<div class="admindashboard">
+    <header class="admin-header"> 
+        <h1 class="adminh1">ADMIN DASHBOARD</h1>
+    </header>
+    <section class="admin-section">
+        <h2 class="adminh2">User and Art Management</h2>
+       
+        <button class="admin-btns" >
+            Edit User
+        </button>
+        <button class="admin-btns" >
+            Edit Art
+        </button>
+    </section>
+    <section class="admin-section">
+        <h2 class="adminh2">Category Management</h2>
+        <button class="admin-btns" @>Edit Categories</button>
+    </section>
+    <section class="admin-section">
+        <h2 class="adminh2">Email Updates</h2>
+        <button class="admin-btns">Send Email</button>
+    </section>
+    <section class="admin-section">
+        <h2 class="adminh2">Bidding Management</h2>
+        
+        <button class="admin-btns">Edit Bids</button>
+    </section>
+</div>
+
+@code {
+    void NavigateTo(string url)
+    {
+        Navigation.NavigateTo(url);
+    }
+}
+ *@
+ @page "/admin"
+@inject NavigationManager Navigation
+
+<div class="admindashboard">
+    <header class="admin-header">
+        <h1 class="adminh1">ADMIN DASHBOARD</h1>
+    </header>
+    <section class="admin-section">
+        <h2 class="adminh2">User and Art Management</h2>
+
+        <a class="admin-btns" href="/manageusers">
+            Edit User
+        </a>
+        <a class="admin-btns" href="/managearts">
+            Edit Art
+        </a>
+    </section>
+    <section class="admin-section">
+        <h2 class="adminh2">Category Management</h2>
+        <a class="admin-btns" href="/artcategories">
+            Edit Categories
+        </a>
+    </section>
+    <section class="admin-section">
+        <h2 class="adminh2">Email Updates</h2>
+        <a class="admin-btns" href="/emailusers">
+            Send Email
+        </a>
+    </section>
+    <section class="admin-section">
+        <h2 class="adminh2">Bidding Management</h2>
+
+        <a class="admin-btns" href="/managebids">
+            Edit Bids
+        </a>
+    </section>
+</div>

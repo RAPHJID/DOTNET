@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Dummy.razor" />
+    <Content Remove="Pages\SingleArt.razor" />
+    <Content Remove="Shared\AddArt.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\ManageArts.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.10" PrivateAssets="all" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  <PackageReference Include="System.Net.Http.Json" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\SingleArt.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Dummy.razor" />
+    <_ContentIncludedByDefault Remove="Pages\SingleArt.razor" />
+    <_ContentIncludedByDefault Remove="Shared\AddArt.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Dummy.razor" />
+    <None Include="Shared\AddArt.razor" />
+    <None Include="Shared\SingleArt.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\AddArt.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Pages\ManageArts.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Dummy.razor" />
+  </ItemGroup>
+
+</Project>

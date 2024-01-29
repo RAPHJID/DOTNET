@@ -1,0 +1,24 @@
+﻿@* @using BLAZORECOMMERCE.Components.Models
+<table>
+    <tbody>
+        <tr>
+            <td>@bind="coupon.CouponCode"</td>
+            <td>@bind-value="CouponMinAmount"</td>
+            <td>@bind-value="CouponAmount"</td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+    public Coupon coupon { get; set; } = new Coupon();
+
+    [Parameter]
+    public EventCallback<Product> OnAddCoupon { get; set; }
+
+    public async Task addNewCoupon()
+    {
+        await OnAddProduct.InvokeAsync(coupon);
+    }
+}
+ *@
+ 

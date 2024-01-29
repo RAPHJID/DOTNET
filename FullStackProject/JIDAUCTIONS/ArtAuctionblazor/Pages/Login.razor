@@ -1,0 +1,84 @@
+﻿@page "/login"
+@using Newtonsoft.Json
+@using System.Text.Json
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime _jsRuntime
+@inherits LayoutComponentBase
+
+@* 
+<div class="container">
+    <div class="form-container">
+        <h2>Welcome Back!</h2>
+        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" @bind="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" @bind="password" required>
+
+            <button @onclick="UserLogin" type="submit">Login</button>
+        
+
+        <div class="register-link">
+            Don't have an account? <a href="/register">Register here</a>
+        </div>
+    </div>
+</div> *@
+<div class="main">
+    <form>
+        <h2>Login</h2>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+@code {
+    public List<User> users = new List<User>();
+
+    public string? email { get; set; } 
+    public string? password { get; set; }
+
+
+    public async Task UserLogin()
+    {
+        var user = users.Find(u => u.Email == email && u.Password == password);
+
+        if (user != null)
+        {
+            // Redirect based on the user role
+            if (user.Role == "user")
+            {
+                NavigationManager.NavigateTo("/artrazor");
+            }
+            else if (user.Role == "admin")
+            {
+                NavigationManager.NavigateTo("/admin");
+            }
+        }
+        else
+        {
+            // Handle invalid credentials
+            Console.WriteLine("Invalid credentials");
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var jsonContent = await Http.GetFromJsonAsync<List<User>>("sample-data/user.json");
+        if(jsonContent.Any())
+        {
+            users = jsonContent;
+        }
+
+    }
+
+
+   
+}

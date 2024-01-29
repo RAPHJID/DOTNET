@@ -1,0 +1,98 @@
+﻿[
+  {
+    "Id": 1,
+    "Name": "Starry Night",
+    "Artist": "Vincent van Gogh",
+    "Category": "Impressionist",
+    "Description": "A mesmerizing night sky filled with swirling stars and vibrant colors.",
+    "StartingPrice": "5000",
+    "EndDate": "2024-04-18",
+    "Status": "Open for Bids",
+    "CurrentBid": "7500",
+    "ImageUrl": "https://i.pinimg.com/236x/8e/30/4a/8e304aac188acd1f61943e58752a2115.jpg"
+  },
+  {
+    "Id": 2,
+    "Name": "Mona Lisa",
+    "Artist": "Leonardo da Vinci",
+    "Category": "Renaissance",
+    "Description": "The enigmatic smile of a woman in a captivating portrait.",
+    "StartingPrice": "10000",
+    "EndDate": "2024-05-15",
+    "Status": "Open for Bids",
+    "CurrentBid": "15000",
+    "ImageUrl": "https://i.pinimg.com/236x/72/57/3b/72573b311eae576b00f83ce3170eb742.jpg"
+  },
+  {
+    "Id": 3,
+    "Name": "The Persistence of Memory",
+    "Artist": "Salvador Dalí",
+    "Category": "Surrealism",
+    "Description": "Melting clocks draped over surreal landscapes, portraying the fluidity of time.",
+    "StartingPrice": "8000",
+    "EndDate": "2024-06-10",
+    "Status": "Open for Bids",
+    "CurrentBid": "12000",
+    "ImageUrl": "https://i.pinimg.com/236x/8d/ae/6e/8dae6e73aa78e1c29874a845ba136301.jpg"
+  },
+  {
+    "Id": 4,
+    "Name": "Starry Night",
+    "Artist": "Vincent van Gogh",
+    "Category": "Digital Art",
+    "Description": "A mesmerizing night sky filled with swirling stars and vibrant colors.",
+    "StartingPrice": "5000",
+    "EndDate": "2024-04-18",
+    "Status": "Open for Bids",
+    "CurrentBid": "7500",
+    "ImageUrl": "https://i.pinimg.com/236x/8e/30/4a/8e304aac188acd1f61943e58752a2115.jpg"
+  },
+  {
+    "Id": 5,
+    "Name": "Mona Lisa",
+    "Artist": "Leonardo da Vinci",
+    "Category": "NFTs",
+    "Description": "The enigmatic smile of a woman in a captivating portrait.",
+    "StartingPrice": "10000",
+    "EndDate": "2024-05-15",
+    "Status": "Open for Bids",
+    "CurrentBid": "15000",
+    "ImageUrl": "https://i.pinimg.com/236x/72/57/3b/72573b311eae576b00f83ce3170eb742.jpg"
+  },
+  {
+    "Id": 6,
+    "Name": "The Persistence of Memory",
+    "Artist": "Salvador Dalí",
+    "Category": "NFTs",
+    "Description": "Melting clocks draped over surreal landscapes, portraying the fluidity of time.",
+    "StartingPrice": "8000",
+    "EndDate": "2024-06-10",
+    "Status": "Open for Bids",
+    "CurrentBid": "12000",
+    "ImageUrl": "https://i.pinimg.com/236x/8d/ae/6e/8dae6e73aa78e1c29874a845ba136301.jpg"
+  },
+  {
+    "Id": 7,
+    "Name": "Mona Lisa",
+    "Artist": "Leonardo da Vinci",
+    "Category": "NFTs",
+    "Description": "The enigmatic smile of a woman in a captivating portrait.",
+    "StartingPrice": "10000",
+    "EndDate": "2024-05-15",
+    "Status": "Open for Bids",
+    "CurrentBid": "15000",
+    "ImageUrl": "https://i.pinimg.com/236x/79/9f/8f/799f8fda57d50730824426a38ff905a2.jpg"
+  },
+  {
+    "Id": 8,
+    "Name": "The Persistence of Memory",
+    "Artist": "Salvador Dalí",
+    "Category": "NFTs",
+    "Description": "Melting clocks draped over surreal landscapes, portraying the fluidity of time.",
+    "StartingPrice": "8000",
+    "EndDate": "2024-06-10",
+    "Status": "Open for Bids",
+    "CurrentBid": "12000",
+    "ImageUrl": "https://i.pinimg.com/236x/c6/e6/6a/c6e66aab63def125859d1d6c8bf339a5.jpg"
+  }
+]

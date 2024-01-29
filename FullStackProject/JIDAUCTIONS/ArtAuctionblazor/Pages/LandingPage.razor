@@ -1,0 +1,43 @@
+﻿@page "/"
+
+
+<div class="landingpage">
+    <header>
+        @* <img src="your-logo.png" alt="Your Logo"> *@
+        <strong><h3>JIDAUCTIONS</h3></strong>
+        <nav>
+            <button id="login-btn" @onclick="NavigateToLogin">Login</button>
+            <button id="discover-btn" @onclick="NavigateToDiscover">Discover</button>
+        </nav>
+    </header>
+    <div id="content">
+        <h1>
+            "BIDDING<br />
+            MOMENTS<br />
+            WINNING<br />
+            MEMORIES<br />
+            -WHERE EVERY BID<br />
+            COUNTS!!"
+        </h1>
+    </div>
+    <button id="joinus" @onclick="NavigateToRegister">JoinUs</button>
+
+</div>
+@code{
+    // Inject NavigationManager
+    @inject NavigationManager NavigationManager
+
+    // Method to navigate to "/login"
+    private void NavigateToLogin()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+    private void NavigateToDiscover()
+    {
+        NavigationManager.NavigateTo("/user");
+    }
+    private void NavigateToRegister()
+    {
+        NavigationManager.NavigateTo("/register");
+    }
+}

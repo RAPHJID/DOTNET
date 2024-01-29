@@ -1,0 +1,28 @@
+﻿
+.container {
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-control {
+   
+    color: #fff;
+}
+
+.form-select {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn-dark {
+    background-color: #5cb85c;
+    color: #fff;
+}
+
+    .btn-dark:hover {
+        background-color: #4cae4c;
+    }
+
+

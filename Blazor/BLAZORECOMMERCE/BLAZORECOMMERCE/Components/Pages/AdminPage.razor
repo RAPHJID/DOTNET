@@ -1,0 +1,69 @@
+﻿@page "/"
+@inject HttpClient Http
+@inject IJSRuntime _jsRuntime;
+
+<div class="row">
+
+    <div class="col-4">
+        <AddProduct @ref="addProduct" OnAddProduct="AddProduct"></AddProduct>
+    </div>
+
+    <div class="col-8">
+        <div class="row">
+
+            @foreach (var product in products)
+            {
+
+                <SingleProduct product="product"
+                               OnDeleteProduct="()=>DeleteProduct(product)"
+                               OnEditProduct="EditProduct"></SingleProduct>
+
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<Product> products = new List<Product>();
+    public AddProduct addProduct { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //call api to get the products to display
+
+        var prods = await Http.GetFromJsonAsync<List<Product>>("sample-data/products.json");
+        if (prods.Any())
+        {
+            products = prods;
+        }
+
+    }
+
+    public void AddProduct(Product newproduct)
+    {
+        var p = products.Find(x => x.ProductId == newproduct.ProductId);
+        if (p == null)
+        {
+            newproduct.ProductId = products.Count + 1;
+            products.Add(newproduct);
+        }
+        else
+        {
+            p.ProductName = newproduct.ProductName;
+            p.ProductDescription = newproduct.ProductDescription;
+            p.Price = newproduct.Price;
+            p.Image = newproduct.Image;
+        }
+    }
+    public void EditProduct(Product product)
+    {
+        addProduct.EditProduct(product);
+    }
+
+    public void DeleteProduct(Product product)
+    {
+        products.Remove(product);
+    }
+
+}

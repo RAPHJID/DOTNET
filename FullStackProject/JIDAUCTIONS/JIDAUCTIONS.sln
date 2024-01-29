@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34302.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtAuctionblazor", "ArtAuctionblazor\ArtAuctionblazor.csproj", "{28D0ADA8-D1A7-4399-9B3F-DA9D845E7F0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthMicroService", "AuthMicroService\AuthMicroService.csproj", "{672A7EE6-7797-47FF-BB33-1563280AA13D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailService\EmailService.csproj", "{D942A39A-AF21-4A34-8A69-7B9AC41E036A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtService", "ArtService\ArtService.csproj", "{8B16EFF2-A895-41B9-841F-F6A6141EB35F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuctionMessageBus", "AuctionMessageBus\AuctionMessageBus.csproj", "{242F5C9B-ECAC-41F7-8900-473CCC97C2E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiddingService", "BiddingService\BiddingService.csproj", "{407B9F54-0E12-4961-B363-F15C7B604A48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28D0ADA8-D1A7-4399-9B3F-DA9D845E7F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D0ADA8-D1A7-4399-9B3F-DA9D845E7F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D0ADA8-D1A7-4399-9B3F-DA9D845E7F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D0ADA8-D1A7-4399-9B3F-DA9D845E7F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{672A7EE6-7797-47FF-BB33-1563280AA13D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{672A7EE6-7797-47FF-BB33-1563280AA13D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{672A7EE6-7797-47FF-BB33-1563280AA13D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{672A7EE6-7797-47FF-BB33-1563280AA13D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D942A39A-AF21-4A34-8A69-7B9AC41E036A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D942A39A-AF21-4A34-8A69-7B9AC41E036A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D942A39A-AF21-4A34-8A69-7B9AC41E036A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D942A39A-AF21-4A34-8A69-7B9AC41E036A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B16EFF2-A895-41B9-841F-F6A6141EB35F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B16EFF2-A895-41B9-841F-F6A6141EB35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B16EFF2-A895-41B9-841F-F6A6141EB35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B16EFF2-A895-41B9-841F-F6A6141EB35F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{242F5C9B-ECAC-41F7-8900-473CCC97C2E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{242F5C9B-ECAC-41F7-8900-473CCC97C2E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{242F5C9B-ECAC-41F7-8900-473CCC97C2E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{242F5C9B-ECAC-41F7-8900-473CCC97C2E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{407B9F54-0E12-4961-B363-F15C7B604A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{407B9F54-0E12-4961-B363-F15C7B604A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{407B9F54-0E12-4961-B363-F15C7B604A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{407B9F54-0E12-4961-B363-F15C7B604A48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F8314AD-8932-49BC-A909-C6F081421306}
+	EndGlobalSection
+EndGlobal

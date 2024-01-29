@@ -1,0 +1,33 @@
+﻿@page "/register"
+@inject HttpClient Http
+
+<div class="registerpage">
+    <header class="login-nav">
+        <div>
+            <h2>JIDAUCTIONS</h2>
+        </div>
+        
+    </header>
+<div class="reg">
+    <div class="form-contain">
+        <form action="/register" method="post">
+            <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
+
+                <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+
+            <input type="submit" value="Register">
+        </form>
+    </div>
+    <div class="image-container">
+        <img src="./css/registerimg.jpeg" alt="image" />
+    </div>
+</div>
+</div>

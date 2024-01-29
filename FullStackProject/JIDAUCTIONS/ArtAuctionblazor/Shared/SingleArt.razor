@@ -1,0 +1,15 @@
+﻿<div class="card shadow col-44 p-4" style="width: 18rem; height:80vh;">
+    <img src="@art.ImageUrl" class="card-img-top" alt="art.Name" style="max-height: 30vh;" />
+    <div class="card-body">
+        <h5 class="card-title">@art.Name</h5>
+        <p class="card-text">@art.Description</p>
+        <p class="card-text">Artist: @art.Artist</p>
+        <p class="card-text">Current Bid: @art.CurrentBid</p>
+        <p class="card-text">End Date: @art.EndDate</p>
+        <p class="card-text">Status: @art.Status</p>
+    </div>
+</div>
+@code{
+    [Parameter]
+    public Art art {get;set;} = default!;
+}

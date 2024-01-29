@@ -1,0 +1,12 @@
+﻿.container {
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+/*.image-container {
+    text-align: center;
+}
+*/
+.form-container {
+    padding: 20px;
+}

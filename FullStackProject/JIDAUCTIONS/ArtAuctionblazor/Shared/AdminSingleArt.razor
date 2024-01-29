@@ -1,0 +1,62 @@
+﻿@using ArtAuctionblazor.Models
+
+
+<div class="card shadow col-4 p-4" style="width: 18rem;">
+   
+    <img src="@art.ImageUrl" class="card-img-top custom-image" alt="@art.Name">
+    <div class="card-body">
+        <h5 class="card-title">@art.Name</h5>
+
+        <div class="d-flex flex-column">
+            <div>
+                <strong>Artist:</strong> @art.Artist
+            </div>
+            <div>
+                <strong>Description:</strong> @art.Description
+            </div>
+            <div>
+                <strong>Starting Price:</strong> @art.StartingPrice
+            </div>
+        
+            <div>
+                <strong>Current Bid:</strong> @art.CurrentBid
+            </div>
+            <div>
+                <strong>Status:</strong> @art.Status
+            </div>
+            <div>
+                <strong>End Date:</strong> @art.EndDate
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-between mt-3">
+            <button @onclick="editArt" type="button" class="btn btn-primary">Edit</button>
+            <button @onclick="deleteArt" type="button" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+@code {
+    [Parameter]
+    public Art art { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<Art> OnEditArt { get; set; }
+
+    public async Task editArt()
+    {
+        await OnEditArt.InvokeAsync(art);
+    }
+    [Parameter]
+    public EventCallback<Art> OnDeleteArt { get; set; }
+
+    public async Task deleteArt()
+    {
+        await OnDeleteArt.InvokeAsync(art);
+    }
+
+}

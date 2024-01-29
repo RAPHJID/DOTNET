@@ -1,0 +1,24 @@
+﻿[
+  {
+    "ProductId": 1,
+    "ProductName": "Monitors",
+    "ProductDescription": "Best Monitor",
+    "Price": "2000",
+    "Image": "https://i.pinimg.com/236x/82/63/bb/8263bb2c0f89685a2bb6107c422b0c94.jpg"
+  },
+  {
+    "ProductId": 2,
+    "ProductName": "Keyboards",
+    "ProductDescription": "Best Keyboards",
+    "Price": "500",
+    "Image": "https://i.pinimg.com/236x/f8/51/ff/f851ff53ca142b303483ee31ad1c9600.jpg"
+  },
+  {
+    "ProductId": 3,
+    "ProductName": "MacBook",
+    "ProductDescription": "Best Laptop",
+    "Price": "50000",
+    "Image": "https://i.pinimg.com/236x/40/61/c8/4061c8841fa8ab02aa484db1cfcb96f0.jpg"
+  }
+
+]

@@ -1,0 +1,36 @@
+﻿/*.landing {   
+    background-image: url('../Images/Caption This Image and Selected Wisepicks – 25 April 2021.jpeg');
+    background-color: red;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;*/
+    /*color: white;*/
+/*}*/
+
+.navbar {
+    padding: 1rem;
+
+}
+
+.navbar-brand {
+    margin-right: 5cm;
+}
+
+.navbar-buttons {
+    display: flex;
+    align-items: center;
+}
+.navbar-buttons button {
+        margin-right: 5cm;
+}
+
+.landingpage {
+    background: url("../Images/Landing.jpeg");
+    background-size: cover;
+    background-position: center;
+    height: 90vh;
+    width: 100vw;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

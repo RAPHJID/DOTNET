@@ -1,0 +1,80 @@
+﻿@inject IJSRuntime JSRuntime
+
+<!-- EditUserModal.razor -->
+<div class="modal fade" tabindex="-1" role="dialog" id="editUserModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>User Type:</label>
+                <select class="form-control" @bind="editedUserType">
+                    <option value="Bidder">Bidder</option>
+                    <option value="Seller">Seller</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @onclick="SaveChanges">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    User editedUser;
+    string editedUserType;
+
+    [Parameter]
+    public Action<User> EditUserAction { get; set; }
+
+    public void EditUser(User user)
+    {
+        editedUser = user;
+        editedUserType = GetUserType(user);
+        // Show the modal
+        JSRuntime.InvokeVoidAsync("$('#editUserModal').modal", "show");
+    }
+
+    void SaveChanges()
+    {
+        // Update the user type and hide the modal
+        editedUser.IsBidder = editedUserType == "Bidder";
+        editedUser.IsSeller = editedUserType == "Seller";
+
+        // Call the provided EditUserAction to handle user editing
+        EditUserAction?.Invoke(editedUser);
+
+        // Refresh the user list
+        StateHasChanged();
+
+        // Hide the modal
+        JSRuntime.InvokeVoidAsync("$('#editUserModal').modal", "hide");
+    }
+
+    // ... The rest of your existing code ...
+
+    string GetUserType(User user)
+    {
+        if (user.IsBidder && user.IsSeller)
+        {
+            return "Bidder, Seller";
+        }
+        else if (user.IsBidder)
+        {
+            return "Bidder";
+        }
+        else if (user.IsSeller)
+        {
+            return "Seller";
+        }
+        else
+        {
+            return "N/A";
+        }
+    }
+}

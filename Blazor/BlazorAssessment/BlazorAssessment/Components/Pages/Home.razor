@@ -13,7 +13,7 @@
                 <p class="mb-1">Location: @memory.Location</p>
             </div>
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-warning" @onclick="() => EditMemory(memory)">Edit</button>
+                <button type="button" class="btn btn-success" @onclick="() => EditMemory(memory)">Edit</button>
                 <button type="button" class="btn btn-danger" @onclick="() => DeleteMemory(memory)">Delete</button>
             </div>
         </li>
@@ -22,7 +22,7 @@
 
 @* adding/editing form *@
 <div class="mt-4">
-    <h4>Add/Edit Memory</h4>
+    <h4 class="text-primary">Add/Edit Memory</h4>
     <form>
         <div class="form-group">
             <label for="name">Name:</label>
@@ -76,7 +76,7 @@
                     Location = newMemory.Location
                 });
         }
-        @* for clear the form after adding/editing *@
+        @* for clearing the form after adding/editing *@
         
         newMemory = new Memory();
     }

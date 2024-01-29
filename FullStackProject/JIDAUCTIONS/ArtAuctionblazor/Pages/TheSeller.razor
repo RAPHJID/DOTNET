@@ -1,0 +1,59 @@
+﻿@page "/uploadart"
+<div class="body">
+<NavMenu></NavMenu>
+<div class="row">
+    <div class="col-4">
+        @* <AddArt></AddArt> *@
+        <AddArtV2 OnAddNewArt="AddNewArt"></AddArtV2>
+    </div>
+
+    <div class="col-8">
+        <div class="row">
+            @foreach (var art in arts)
+            {
+                <SingleArt art="art"></SingleArt>
+            }
+        </div>
+    </div>
+</div>
+</div>
+@code {
+
+    public List<Art> arts = new List<Art>()
+    {
+        new Art()
+        {
+            Id=1,
+            Name="Abstract Painting",
+            Description="Vibrant colors and unique patterns",
+            Artist="John Doe",
+            Category="Abstract",
+            StartingPrice=500,
+            CurrentBid=700,
+            Status="Available",
+            BidAmount=0,
+            ImageUrl="https://i.pinimg.com/236x/14/ce/5e/14ce5e867add3a47452596cd9d27fdcc.jpg",
+            EndDate=DateTime.Now.AddDays(7)
+        },
+        new Art()
+        {
+            Id=2,
+            Name="Sculpture",
+            Description="Beautifully carved sculpture from marble",
+            Artist="Jane Smith",
+            Category="Sculpture",
+            StartingPrice=1000,
+            CurrentBid=1200,
+            Status="Available",
+            BidAmount=0,
+            ImageUrl="https://i.pinimg.com/236x/eb/e7/59/ebe759bfa5403bf871c57f8e350f63a8.jpg",
+            EndDate=DateTime.Now.AddDays(10)
+        },     
+    };
+
+    public void AddNewArt(Art newArt)
+    {
+        newArt.Id = arts.Count + 1;
+        arts.Add(newArt);
+    }
+}

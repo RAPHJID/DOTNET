@@ -1,0 +1,42 @@
+﻿@if (SelectedArt != null)
+{
+    @* <div class="art-details">
+        <h2>@SelectedArt.Name</h2>
+        <img src="@SelectedArt.ImageUrl" alt="@SelectedArt.Name"/>
+        <p>Artist:@SelectedArt.Artist</p>
+        <p>Description:@SelectedArt.Description</p>
+        <p>Current Bid:@SelectedArt.CurrentBid</p>
+        <p>End-Date:@SelectedArt.EndDate</p>
+        <p>Status:@SelectedArt.Status</p>
+    </div> *@
+    <div class="card shadow col-4 p-4" style="width: 18rem;">
+        <img src="@art.ImageUrl" class="card-img-top" alt="@art.Name">
+        <div class="card-body">
+            <h5 class="card-title">@art.Name</h5>
+
+            <div class="d-flex justify-content-between">
+                <span>
+                    @art.Artist
+                </span>
+                <span>
+                    @art.Description
+                </span>
+                <span>
+                    @art.CurrentBid
+                </span>
+                <span>
+                    @art.EndDate
+                </span>
+                <span>
+                    @art.Status
+                </span>
+            </div>
+        </div>
+    </div>
+}
+@code{
+    [Parameter]
+    public Art SelectedArt {get; set;}
+    [Parameter]
+    public Art art {get;set;}
+}

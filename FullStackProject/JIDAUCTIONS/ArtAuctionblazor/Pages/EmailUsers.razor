@@ -1,0 +1,71 @@
+﻿<!-- EmailUsers.razor -->
+@page "/emailusers"
+
+<div class="container mt-5 bg-light p-4">
+    <h3 class="text-dark mb-4">Email Users</h3>
+
+    <div class="form-group">
+        <label for="emailType">Target Audience:</label>
+        <select class="form-control" @bind="selectedEmailType" id="emailType">
+            <option value="Bidders">Bidders</option>
+            <option value="Sellers">Sellers</option>
+            <option value="Both">Both</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="subject">Subject:</label>
+        <input type="text" class="form-control" @bind="emailSubject" id="subject" />
+    </div>
+
+    <div class="form-group">
+        <label for="emailContent">Compose your email:</label>
+        <textarea class="form-control" rows="4" @bind="emailContent" id="emailContent"></textarea>
+    </div>
+
+    <button class="btn btn-primary mt-3" @onclick="SendEmail">Send Email</button>
+</div>
+
+@code {
+    string selectedEmailType = "Bidders";
+    string emailSubject;
+    string emailContent;
+
+    async Task SendEmail()
+    {
+        // Fetch the list of users based on the selected email type
+        List<User> users = FetchUsers(selectedEmailType);
+
+        // Simulate sending email to each user
+        foreach (var user in users)
+        {
+            await SimulateSendEmail(user.Email, emailSubject, emailContent);
+        }
+
+        // Show an alert message
+        //JSRuntime.InvokeVoidAsync("alert", "Emails sent successfully!");
+    }
+
+    List<User> FetchUsers(string emailType)
+    {
+        // Replace this with actual logic to fetch users based on the selected email type
+        return new List<User>
+        {
+            new User { Username = "User1", Email = "user1@example.com", IsBidder = true, IsSeller = false },
+            new User { Username = "User2", Email = "user2@example.com", IsBidder = false, IsSeller = true },
+            new User { Username = "User3", Email = "user3@example.com", IsBidder = true, IsSeller = false },
+            // Add more users as needed
+        }.Where(user =>
+        (emailType == "Bidders" && user.IsBidder) ||
+        (emailType == "Sellers" && user.IsSeller) ||
+        (emailType == "Both" && (user.IsBidder || user.IsSeller))
+        ).ToList();
+    }
+
+    async Task SimulateSendEmail(string emailAddress, string subject, string content)
+    {
+        // Simulate sending email (replace this with actual email sending logic)
+        Console.WriteLine($"Email sent to {emailAddress} with subject: {subject} and content: {content}");
+        await Task.Delay(1000); // Simulate email sending delay
+    }
+}

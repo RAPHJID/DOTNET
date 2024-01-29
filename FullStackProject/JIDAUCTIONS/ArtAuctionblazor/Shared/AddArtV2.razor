@@ -1,0 +1,65 @@
+﻿<div class="container">
+@* <div class="row image-container">
+    <img src="@(string.IsNullOrWhiteSpace(art.ImageUrl)?
+    "https://i.pinimg.com/236x/69/68/e8/6968e8c6c35c718243571912e8e0b6fa.jpg" : art.ImageUrl)"
+         style="width: 18rem;" />
+
+</div> *@
+
+<div class="row form-container">
+    <h1> Add Art</h1>
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" class="form-control" @bind="art.Name" id="Name" placeholder="Art Name">
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input type="text" class="form-control" @bind="art.Description" id="Description" placeholder="Art Description">
+    </div>
+
+    <div class="form-group">
+        <label for="Artist">Artist</label>
+        <input type="text" class="form-control" @bind="art.Artist" id="Artist" placeholder="Artist Name">
+    </div>
+
+    <div class="form-group">
+        <label for="Category">Category</label>
+        <input type="text" class="form-control" @bind="art.Category" id="Category" placeholder="Art Category">
+    </div>
+
+    <div class="form-group">
+        <label for="StartingPrice">Starting Price</label>
+        <input type="number" class="form-control" @bind="art.StartingPrice" id="StartingPrice" placeholder="Starting Price">
+    </div>
+
+    <div class="form-group">
+        <label for="Status">Status</label>
+        <input type="text" class="form-control" @bind="art.Status" id="Status" placeholder="Art Status">
+    </div>
+
+    <div class="form-group">
+        <label for="ImageUrl">Image URL</label>
+        <input type="text" class="form-control" @bind="art.ImageUrl" id="ImageUrl" placeholder="Image URL">
+    </div>
+
+    <div class="form-group">
+        <label for="EndDate">End Date</label>
+        <input type="datetime-local" class="form-control" @bind="art.EndDate" id="EndDate" placeholder="End Date">
+    </div>
+
+    <button @onclick="AddNewArt" class="mt-4 btn btn-primary">Submit</button>
+</div>
+</div>
+@code {
+    public Art art { get; set; } = new Art();
+
+     [Parameter]
+     public EventCallback<Art> OnAddNewArt { get; set; }
+
+     public async Task AddNewArt()
+     {
+     await OnAddNewArt.InvokeAsync(art);
+     }
+}
+

@@ -1,0 +1,48 @@
+﻿@page "/viewbids"
+
+<div class="body">
+    <h3>Your Arts and Bids</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Art Name</th>
+                <th>Current Bidder</th>
+                <th>Bid Amount</th>
+                <th>Bid Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Art 1</td>
+                <td>Bidder 1</td>
+                <td>10,000</td>
+                <td>@DateTime.Now</td>
+            </tr>
+            <tr>
+                <td>Art 2</td>
+                <td>Bidder 2</td>
+                <td>150,000</td>
+                <td>@DateTime.Now.AddDays(-1)</td>
+            </tr>
+            <tr>
+                <td>Art 3</td>
+                <td>Bidder 3</td>
+                <td>45,000</td>
+                <td>@DateTime.Now.AddDays(-8)</td>
+            </tr>
+            <tr>
+                <td>Art 2</td>
+                <td>Bidder 2</td>
+                <td>15,000</td>
+                <td>@DateTime.Now.AddDays(-7)</td>
+            </tr>
+            <tr>
+                <td>Art 2</td>
+                <td>Bidder 2</td>
+                <td>25,000</td>
+                <td>@DateTime.Now.AddDays(-2)</td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>

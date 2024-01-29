@@ -1,0 +1,55 @@
+﻿@page "/counter"
+@inject HttpClient Http
+@inject IJSRuntime _jsRuntime;
+
+<div class="row">
+
+        <table>
+            <tbody>
+                <tr>
+                <td class="fw-bold">Coupon Code</td>
+                <td class="fw-bold">Coupon Min Amount</td>
+                <td class="fw-bold">Coupon Amount</td>
+                </tr>
+            </tbody>
+        </table>
+    <button type="button" class="btn btn-success">Add Coupon</button>
+    @foreach (var coupon in coupons)
+    {
+        <table class="table">
+            
+            <tbody>
+                <tr>
+                    
+                    <td>@coupon.CouponCode</td>
+                    <td>@coupon.CouponMinAmount</td>
+                    <td>@coupon.CouponAmount</td>
+                    
+                </tr>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </tbody>
+        </table>
+    }
+</div>
+
+
+@code {
+
+
+    public List<Coupon> coupons = new List<Coupon>();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //call api to get the products to display
+
+        var coup = await Http.GetFromJsonAsync<List<Coupon>>("sample-data/coupon.json");
+        if (coup.Any())
+        {
+            coupons = coup;
+        }
+
+    }
+
+
+}
