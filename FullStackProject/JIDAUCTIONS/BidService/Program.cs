@@ -1,5 +1,7 @@
 using BidService.Data;
 using BidService.Extensions;
+using BidService.Services.IServices;
+using BidService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +20,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IBid, BidsService>();
+builder.Services.AddScoped<IArt, ArtService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +35,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseMigrations();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
