@@ -24,6 +24,8 @@ builder.Services.AddScoped<IBid, BidsService>();
 builder.Services.AddScoped<IArt, ArtService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddHttpClient("Arts", a => a.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServiceURl:ArtService")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

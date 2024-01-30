@@ -31,5 +31,10 @@ namespace AuctionMessageBus
             //free the Resources/Clean uP
             await sender.DisposeAsync();
         }
+
+        public Task PublishMessage(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

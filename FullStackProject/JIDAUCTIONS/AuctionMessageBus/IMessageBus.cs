@@ -9,5 +9,6 @@ namespace AuctionMessageBus
     public interface IMessageBus
     {
         Task PublishMessage(object message, string Topic_Queue_Name);
+        Task PublishMessage(string v);
     }
 }

@@ -5,13 +5,13 @@ using BidService.Models.DTOs;
 
 namespace BidService.Profiles
 {
-    public class BidsProfiles: Profile
+    public class BidsProfile: Profile
     {
-        public BidsProfiles()
+        public BidsProfile()
         {
             
-            CreateMap<Bid, BidDTO>();
-            CreateMap<BidCreateDTO, Bid>();
+            CreateMap<Bid, BidDTO>().ReverseMap();
+            CreateMap<BidCreateDTO, Bid>().ReverseMap();
         }
     }
 }
