@@ -24,7 +24,7 @@ namespace BidService.Controllers
             _artservice = artservice;
 
         }
-        [HttpPost("{Id}")]
+        /*[HttpPost("{Id}")]
 
         public async Task<ActionResult<ResponseDTO>> AddBid(BidDTO newBid, string Id)
         {
@@ -50,12 +50,61 @@ namespace BidService.Controllers
             var res = await _bidService.AddBidAsync(bid);
             _responseDto.Result = res;
             return Created($"{bid.BidId}", _responseDto);
+        }*/
+        [HttpPost("{Id}")]
+        public async Task<ActionResult<ResponseDTO>> AddBid(BidDTO newBid, string Id)
+        {
+            var UserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (UserId == null)
+            {
+                _responseDto.ErrorMessage = "Sorry You aren't Eligible";
+                return Unauthorized(_responseDto);
+            }
+
+            var art = await _artservice.GetArtById(Id);
+            if (string.IsNullOrWhiteSpace(art.Description))
+            {
+                _responseDto.ErrorMessage = "Art doesn't Exist!!";
+                return NotFound(_responseDto);
+            }
+
+            // Get the current highest bid for the art
+            var currentHighestBid = await _bidService.GetHighestBidForArtAsync(art.Id);
+
+            // Check if the currentHighestBid is not null and if the new bid is higher than the current highest bid
+            if (currentHighestBid != null && newBid.BidAmount <= currentHighestBid.BidAmount)
+            {
+                _responseDto.ErrorMessage = "Your bid must be higher than the current highest bid.";
+                return BadRequest(_responseDto);
+            }
+
+            var bid = _mapper.Map<Bid>(newBid);
+            bid.BidderId = Guid.Parse(UserId);
+            bid.ArtId = art.Id;
+
+            var res = await _bidService.AddBidAsync(bid);
+            _responseDto.Result = res;
+            return Created($"{bid.BidId}", _responseDto);
         }
 
-        [HttpGet]
+
+        [HttpGet("GetAll")]
         public async Task<ActionResult<ResponseDTO>> GetAll()
         {
             var res = await _bidService.GetAllBidsAsync();
+            _responseDto.Result = res;
+            return Ok(_responseDto);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<ActionResult<ResponseDTO>> GetBidById(Guid Id)
+        {
+            var res = await _bidService.GetBidByIdAsync(Id);
+            if (res == null)
+            {
+                _responseDto.ErrorMessage = "Bid Not Found!!";
+                return NotFound(_responseDto);
+            }
             _responseDto.Result = res;
             return Ok(_responseDto);
         }

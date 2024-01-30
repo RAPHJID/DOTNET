@@ -43,5 +43,14 @@ namespace BidService.Services
         {
             return await _context.Bids.Where(x => x.BidId == Id).FirstOrDefaultAsync();
         }
+
+        public async Task<Bid> GetHighestBidForArtAsync(Guid artId)
+        {
+   
+            return await _context.Bids
+                .Where(x => x.ArtId == artId)
+                .OrderByDescending(x => x.BidAmount)
+                .FirstOrDefaultAsync();
+        }
     }
 }

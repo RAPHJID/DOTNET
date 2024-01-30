@@ -8,5 +8,6 @@ namespace BidService.Services.IServices
         Task<List<Bid>> GetAllBidsAsync();
         Task<Bid> GetBidByIdAsync(Guid Id);
         Task<string> DeleteBidAsync(Bid bid);
+        Task<Bid> GetHighestBidForArtAsync(Guid artId);
     }
 }
