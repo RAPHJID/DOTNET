@@ -20,6 +20,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.AddAuth();
+builder.AddSwaggenGenExtension();
+
 builder.Services.AddScoped<IBid, BidsService>();
 builder.Services.AddScoped<IArt, ArtService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

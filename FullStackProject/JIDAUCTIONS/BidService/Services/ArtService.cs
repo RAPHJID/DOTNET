@@ -13,9 +13,9 @@ namespace BidService.Services
             _httpClientFactory = httpClient;
         }
 
-        public async Task<ArtDto> GetArtById(Guid Id)
+        public async Task<ArtDto> GetArtById(string Id)
         {
-            var client = _httpClientFactory.CreateClient("art");
+            var client = _httpClientFactory.CreateClient("Arts");
             var response = await client.GetAsync(Id.ToString());
             var content = await response.Content.ReadAsStringAsync();
             var responseDto = JsonConvert.DeserializeObject<ResponseDTO>(content);

@@ -24,8 +24,9 @@ namespace BidService.Controllers
             _artservice = artservice;
 
         }
-        [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> AddBid(BidDTO newBid)
+        [HttpPost("{Id}")]
+
+        public async Task<ActionResult<ResponseDTO>> AddBid(BidDTO newBid, string Id)
         {
             var UserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             if (UserId == null)
@@ -34,12 +35,21 @@ namespace BidService.Controllers
                 return Unauthorized(_responseDto);
             }
 
-            var art = _mapper.Map<Bid>(newBid);
-            art.BidderId = Guid.Parse(UserId);
+            var art = await _artservice.GetArtById(Id);
+            if(string.IsNullOrWhiteSpace(art.Description))
+            {
+                _responseDto.ErrorMessage = "Art doesn't Exist!!";
+                return NotFound(_responseDto);
+            }
 
-            var res = await _bidService.AddBidAsync(art);
+            var bid = _mapper.Map<Bid>(newBid);
+            bid.BidderId = Guid.Parse(UserId);
+            bid.ArtId = art.Id;
+           
+
+            var res = await _bidService.AddBidAsync(bid);
             _responseDto.Result = res;
-            return Created($"{art.BidId}", _responseDto);
+            return Created($"{bid.BidId}", _responseDto);
         }
 
         [HttpGet]

@@ -33,7 +33,7 @@ namespace AuthMicroService.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<ResponseDto>> RegisterUser(RegisterUserDto registerUserDto)
         {
-            // default role of "Buyer" if not specified
+            // default role of "Bidder" if not specified
             string role = string.IsNullOrEmpty(registerUserDto.Role) ? "Bidder" : registerUserDto.Role;
 
             // Call the service to register the user
