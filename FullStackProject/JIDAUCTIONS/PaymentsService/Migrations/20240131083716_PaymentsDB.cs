@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PaymentsService.Migrations
 {
     /// <inheritdoc />
-    public partial class PaymentsDb : Migration
+    public partial class PaymentsDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,12 @@ namespace PaymentsService.Migrations
                     PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BidId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
-                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    BidderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ArtId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StripeSessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PaymentIntent = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

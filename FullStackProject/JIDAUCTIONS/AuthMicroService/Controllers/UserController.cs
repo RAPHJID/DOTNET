@@ -78,7 +78,7 @@ namespace AuthMicroService.Controllers
             return BadRequest(_response);
         }
 
-        [Authorize("Admin")]
+       
         [HttpPost("AssignRole")]
         public async Task<ActionResult<ResponseDto>> AssignRole(AssignRoleDto role)
         {

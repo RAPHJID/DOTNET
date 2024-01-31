@@ -119,19 +119,11 @@ namespace PaymentsService.Services
                 }
                 else
                 {
-                    /*var reward = new RewardsDto()
-                    {
-                        BookingId = booking.Id,
-                        BookingTotal = booking.BookingTotal,
-                        Name = user.Name,
-                        Email = user.Email
-
-                    };*/
+                    
                     await _messageBus.PublishMessage("Payment Added");
                 }
 
-                // Send an Email to User
-                //Reward the user with some Bonus Points 
+                
                 return true;
 
             }

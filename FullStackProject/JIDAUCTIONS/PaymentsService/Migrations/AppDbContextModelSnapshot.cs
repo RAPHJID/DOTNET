@@ -31,11 +31,28 @@ namespace PaymentsService.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("ArtId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("BidId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BidderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentIntent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StripeSessionId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PaymentId");
 

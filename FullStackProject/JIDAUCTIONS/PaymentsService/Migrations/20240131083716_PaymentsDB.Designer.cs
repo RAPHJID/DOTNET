@@ -12,8 +12,8 @@ using PaymentsService.Data;
 namespace PaymentsService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240129190429_Payments_Db")]
-    partial class PaymentsDb
+    [Migration("20240131083716_PaymentsDB")]
+    partial class PaymentsDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,11 +34,28 @@ namespace PaymentsService.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("ArtId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("BidId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BidderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentIntent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StripeSessionId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PaymentId");
 
