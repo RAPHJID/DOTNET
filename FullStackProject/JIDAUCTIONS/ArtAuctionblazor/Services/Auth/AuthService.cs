@@ -39,7 +39,7 @@ namespace ArtAuctionblazor.Services.Auth
             var bodyContent = new StringContent(request, Encoding.UTF8, "application/json");
             //communicate wih Api
 
-            var response = await _httpClient.PostAsync($"{BASEURL}/api/User/register", bodyContent);
+            var response = await _httpClient.PostAsync($"{BASEURL}/api/User/Register", bodyContent);
             var content = await response.Content.ReadAsStringAsync();
 
             var results = JsonConvert.DeserializeObject<ResponseDto>(content);

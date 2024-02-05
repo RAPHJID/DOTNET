@@ -1,33 +1,91 @@
 ﻿@page "/register"
-@inject HttpClient Http
+@inject IAuth authInterface;
+@inject NavigationManager navigationManager
 
-<div class="registerpage">
-    <header class="login-nav">
-        <div>
-            <h2>JIDAUCTIONS</h2>
-        </div>
-        
-    </header>
-<div class="reg">
-    <div class="form-contain">
-        <form action="/register" method="post">
-            <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required><br>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required><br>
-
-                <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
-
-                <label for="confirmPassword">Confirm Password:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required><br>
-
-            <input type="submit" value="Register">
-        </form>
+<div class="row m-2 text-light bg-dark">
+    <div class="col-12 col-md-6">
+        <img class="h-100 w-100" src="https://i.pinimg.com/236x/8f/0f/f7/8f0ff74e6d901f5c87e3530e8393605e.jpg" />
     </div>
-    <div class="image-container">
-        <img src="./css/registerimg.jpeg" alt="image" />
+
+    <div class="col-12 col-md-6 p-4">
+        <h1 class="text-light">Register User</h1>
+       @*  Display Success Msg *@
+       @if(successMessage != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @successMessage
+            </div>
+        }
+
+        @*  Display Error Msg *@
+        @if (errorMessage != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @errorMessage
+            </div>
+        }
+
+        <EditForm Model="@newUser" OnValidSubmit="registerUser">
+            <DataAnnotationsValidator />
+
+            <div class="form-group p-2">
+                <label for="name" class="text-light">Name</label>
+                <InputText type="text" class="form-control p-2" id="name" @bind-Value="@newUser.Name" aria-describedby="name" />
+                <ValidationMessage For="@(()=>newUser.Name)" />
+            </div>
+
+            <div class="form-group p-2">
+                <label for="email" class="text-light">Email</label>
+                <InputText type="email" class="form-control p-2" id="email" @bind-Value="@newUser.Email" aria-describedby="name" />
+                <ValidationMessage For="@(()=>newUser.Email)" />
+            </div>
+
+            <div class="form-group p-2">
+                <label for="Phone" class="text-light">PhoneNumber</label>
+                <InputText type="text" class="form-control p-2" id="Phone" @bind-Value="@newUser.PhoneNumber" aria-describedby="name" />
+                <ValidationMessage For="@(()=>newUser.PhoneNumber)" />
+            </div>
+
+            <div class="form-group p-2">
+                <label for="password" class="text-light">Password</label>
+                <InputText type="password" class="form-control p-2" id="password" @bind-Value="@newUser.Password" aria-describedby="name" />
+                <ValidationMessage For="@(()=>newUser.Password)" />
+            </div>
+
+            <div class="flex-row m-2">
+                <button type="submit" style="width:100px" class="p-2 m-1 btn btn-primary">Submit</button>
+            </div>
+
+            <div class="row">
+                <p class="col-12 col-md-8 text-light">Already a member? <a href="login" class="text-light">Login</a></p>
+            </div>
+        </EditForm>
     </div>
 </div>
-</div>
+
+@code {
+    private RegisterRequestDto newUser = new RegisterRequestDto();
+    private string successMessage;
+    private string errorMessage;
+
+    private async Task registerUser()
+    {
+        var res = await authInterface.Register(newUser);
+
+
+        if(res.IsSuccess)
+        {
+            //Set success Message
+            successMessage = "Registration Successfull!!";
+            //clear any previous error message
+            errorMessage = null;
+            //navigate to discover page
+            navigationManager.NavigateTo("/user");
+        }
+        else
+        {
+            errorMessage = "Registration Failled. Please check your info and try again!! ";
+            successMessage = null;
+        }
+    }
+}
