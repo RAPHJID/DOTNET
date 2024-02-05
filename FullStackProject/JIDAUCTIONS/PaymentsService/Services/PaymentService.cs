@@ -14,14 +14,19 @@ namespace PaymentsService.Services
         private readonly AppDbContext _appDbContext;
         private readonly IArt _artService;
         private readonly IBidder _bidder;
+        private readonly IBid _bidService;
+        private readonly ResponseDto _responseDto;
         private readonly IMessageBus _messageBus;
 
-        public PaymentService(AppDbContext appDbContext, IArt artService, IBidder bidder, IMessageBus message)
+        public PaymentService(AppDbContext appDbContext, IArt artService, IBidder bidder, IMessageBus message, IBid bidService)
         {
             _appDbContext = appDbContext;
             _artService = artService;
             _bidder = bidder;
+            _responseDto = new ResponseDto();
             _messageBus = message;
+            _bidService = bidService;
+
         }
 
         public async Task<string> AddPayment(Payment payment)
@@ -39,6 +44,18 @@ namespace PaymentsService.Services
         public async Task<Payment> GetPaymentById(Guid Id)
         {
            return await _appDbContext.Payments.Where(x=>x.PaymentId == Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<Payment> GetOrderbyBidId(Guid bidId)
+        {
+            var bidorder = await _appDbContext.Payments.Where(x => x.BidId == bidId).FirstOrDefaultAsync();
+            if (bidorder != null)
+            {
+                _responseDto.ErrorMessage = "Bid id exists";
+
+            }
+            return bidorder;
+
         }
 
         public async Task<StripeRequestDto> MakePayments(StripeRequestDto stripeRequestDto)
@@ -129,6 +146,8 @@ namespace PaymentsService.Services
             }
             return false;
         }
+
+       
     }
     
 }

@@ -24,33 +24,7 @@ namespace BidService.Controllers
             _artservice = artservice;
 
         }
-        /*[HttpPost("{Id}")]
 
-        public async Task<ActionResult<ResponseDTO>> AddBid(BidDTO newBid, string Id)
-        {
-            var UserId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            if (UserId == null)
-            {
-                _responseDto.ErrorMessage = "Sorry You aren't Eligible";
-                return Unauthorized(_responseDto);
-            }
-
-            var art = await _artservice.GetArtById(Id);
-            if(string.IsNullOrWhiteSpace(art.Description))
-            {
-                _responseDto.ErrorMessage = "Art doesn't Exist!!";
-                return NotFound(_responseDto);
-            }
-
-            var bid = _mapper.Map<Bid>(newBid);
-            bid.BidderId = Guid.Parse(UserId);
-            bid.ArtId = art.Id;
-           
-
-            var res = await _bidService.AddBidAsync(bid);
-            _responseDto.Result = res;
-            return Created($"{bid.BidId}", _responseDto);
-        }*/
         [HttpPost("{Id}")]
         public async Task<ActionResult<ResponseDTO>> AddBid(BidDTO newBid, string Id)
         {
@@ -71,6 +45,13 @@ namespace BidService.Controllers
             // Get the current highest bid for the art
             var currentHighestBid = await _bidService.GetHighestBidForArtAsync(art.Id);
 
+            // Check if the new bid is higher than the starting price
+            if (art.StartingPrice.HasValue && newBid.BidAmount <= art.StartingPrice.Value)
+            {
+                _responseDto.ErrorMessage = $"Your bid must be higher than the starting price.{currentHighestBid.BidAmount}";
+                return BadRequest(_responseDto);
+            }
+
             // Check if the currentHighestBid is not null and if the new bid is higher than the current highest bid
             if (currentHighestBid != null && newBid.BidAmount <= currentHighestBid.BidAmount)
             {
@@ -86,6 +67,7 @@ namespace BidService.Controllers
             _responseDto.Result = res;
             return Created($"{bid.BidId}", _responseDto);
         }
+
 
 
         [HttpGet("GetAll")]

@@ -62,7 +62,7 @@ namespace EmailService.Messaging
             {
 
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.Append("<img src=\"https://i.pinimg.com/236x/eb/02/ea/eb02ea9b15eab6b211005334674e5776.jpg\" width =\"1000\" height=\"600\">");
+                stringBuilder.Append("<img src=\"https://i.pinimg.com/236x/eb/02/ea/eb02ea9b15eab6b211005334674e5776.jpg\" width =\"100\" height=\"300\">");
                 stringBuilder.Append("<h1> Hello " + user.Name + "</h1>");
                 stringBuilder.AppendLine("<br/>Welcome to JIDAUCTIONS, The best auction around!!");
 

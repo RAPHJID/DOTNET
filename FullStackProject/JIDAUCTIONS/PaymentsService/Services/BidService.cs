@@ -1,4 +1,4 @@
-﻿/*using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PaymentsService.Models.Dtos;
 using PaymentsService.Services.IServices;
 
@@ -11,7 +11,7 @@ namespace PaymentsService.Services
         {
             _httpClientFactory = httpClient;
         }
-        public async Task<BidResponseDto> GetBidById(Guid Id)
+        /*public async Task<BidResponseDto> GetBidById(Guid Id)
         {
             var client = _httpClientFactory.CreateClient("Bid");
             var response = await client.GetAsync($"{Id}");
@@ -23,10 +23,35 @@ namespace PaymentsService.Services
                 return responseDto;
             }
             return new BidResponseDto();
+        }*/
+        public async Task<BidResponseDto> GetBidById(Guid Id)
+        {
+            var client = _httpClientFactory.CreateClient("Bid");
+
+            // Set the base address if it hasn't been set
+            if (client.BaseAddress == null)
+            {
+                client.BaseAddress = new Uri("https://localhost:7074/api/"); // Replace with your API base URL
+            }
+
+            var response = await client.GetAsync($"{Id}");
+
+            var context = await response.Content.ReadAsStringAsync();
+            var responseDto = JsonConvert.DeserializeObject<BidResponseDto>(context);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return responseDto;
+            }
+
+            return new BidResponseDto();
         }
+
     }
-}*/
-using Newtonsoft.Json;
+
+
+}
+/*using Newtonsoft.Json;
 using PaymentsService.Models.Dtos;
 using PaymentsService.Services.IServices;
 using System;
@@ -61,5 +86,5 @@ namespace PaymentsService.Services
             return new BidResponseDto();
         }
     }
-}
+}*/
 

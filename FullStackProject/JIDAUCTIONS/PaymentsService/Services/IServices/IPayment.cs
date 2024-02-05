@@ -17,5 +17,6 @@ namespace PaymentsService.Services.IServices
 
 
         Task<bool> ValidatePayments(Guid PaymentId);
+        Task<Payment> GetOrderbyBidId(Guid bidId);
     }
 }

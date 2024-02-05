@@ -19,13 +19,18 @@ namespace ArtService.Services
             _response = new ResponseDto();
         }
 
+        /*public async Task<ResponseDto> CreateArtworkAsync(AddArtDto artDto)
+        {
+            
+        }*/
+
         public async Task<ResponseDto> CreateArtworkAsync(AddArtDto artDto)
         {
-            var mappedArt= _mapper.Map<Art>(artDto);
-             _context.Arts.Add(mappedArt);
+            var mappedArt = _mapper.Map<Art>(artDto);
+            _context.Arts.Add(mappedArt);
             await _context.SaveChangesAsync();
-            
-             _response.ErrorMessage = "Art Added Successfully!!";
+
+            _response.ErrorMessage = "Art Added Successfully!!";
             _response.Result = mappedArt;
             return _response;
         }
