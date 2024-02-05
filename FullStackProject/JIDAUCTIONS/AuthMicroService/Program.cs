@@ -1,4 +1,5 @@
 using AuthMicroService.Data;
+using AuthMicroService.Extensions;
 using AuthMicroService.Model;
 using AuthMicroService.Services;
 using AuthMicroService.Services.IServices;
@@ -22,6 +23,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 
+//Set cors policy
+builder.Services.AddCors(options => options.AddPolicy("policy1", build =>
+{
+    //build.WithOrigins("https://localhost:7257");
+    build.AllowAnyOrigin();
+    build.AllowAnyHeader();
+    build.AllowAnyMethod();
+}));
+
 //Configure Identity Framework
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
@@ -37,17 +47,22 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOpti
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    if (!app.Environment.IsDevelopment())
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "AUTH API");
+        c.RoutePrefix = string.Empty;
+    }
+});
+//Run an Pending Migrations
+app.UseMigration();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseCors("policy1");
 app.Run();

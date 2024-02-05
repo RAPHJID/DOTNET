@@ -56,7 +56,7 @@ namespace PaymentsService.Controllers
 
         }
 
-        [HttpPost]
+       /* [HttpPost]
         public async Task<ActionResult<ResponseDto>> MakePayment(MakePaymentsDto payDto)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -96,7 +96,7 @@ namespace PaymentsService.Controllers
             _responseDto.Result = response;
 
             return Ok(_responseDto);
-        }
+        }*/
 
 
 

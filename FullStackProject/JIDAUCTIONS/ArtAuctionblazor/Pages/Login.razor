@@ -1,84 +1,81 @@
 ﻿@page "/login"
-@using Newtonsoft.Json
-@using System.Text.Json
-@inject HttpClient Http
-@inject NavigationManager NavigationManager
-@inject IJSRuntime _jsRuntime
-@inherits LayoutComponentBase
+@inject IAuth authInterface
+@inject ILocalStorageService localStorage
+@inject AuthenticationStateProvider authProvider
+@inject NavigationManager navigationManager
 
-@* 
-<div class="container">
-    <div class="form-container">
-        <h2>Welcome Back!</h2>
-        
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" @bind="email" required>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" @bind="password" required>
+<div class="container-fluid bg-dark text-light vh-100">
+    <div class="row h-100">
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <img class="h-75 w-75" src="https://i.pinimg.com/236x/0f/88/86/0f8886875cc8e90e48b9bde0bc8063f4.jpg" />
+        </div>
 
-            <button @onclick="UserLogin" type="submit">Login</button>
-        
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <div style="max-width: 400px; width: 100%;">
+                <h1 class="text-center">Login User</h1>
+                <EditForm Model="@user" OnValidSubmit="loginUser">
+                    <DataAnnotationsValidator />
 
-        <div class="register-link">
-            Don't have an account? <a href="/register">Register here</a>
+                    <div class="form-group p-2">
+                        <label for="name" class="text-light">UserName</label>
+                        <InputText type="email" class="form-control p-2 bg-dark text-light" id="email" @bind-Value="@user.Username" aria-describedby="name" />
+                        <ValidationMessage For="@(()=>user.Username)" />
+                    </div>
+
+                    <div class="form-group p-2">
+                        <label for="password" class="text-light">Password</label>
+                        <InputText type="text" class="form-control p-2 bg-dark text-light" id="password" @bind-Value="@user.Password" aria-describedby="name" />
+                        <ValidationMessage For="@(()=>user.Password)" />
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" style="width:150px" class="p-2 btn btn-primary">Submit</button>
+                    </div>
+
+                    <div class="row mt-3">
+                        <p class="col-12 text-light text-center">Not a member? <a href="register">Register</a></p>
+                    </div>
+                </EditForm>
+               @*  Showing the error message *@
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <div class="alert alert-danger mt-2">
+                        @errorMessage
+                    </div>
+                }
+            </div>
         </div>
     </div>
-</div> *@
-<div class="main">
-    <form>
-        <h2>Login</h2>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="submit">Login</button>
-    </form>
 </div>
 
+
 @code {
-    public List<User> users = new List<User>();
+    private LoginRequestDto user = new LoginRequestDto();
+    private string errorMessage;
 
-    public string? email { get; set; } 
-    public string? password { get; set; }
-
-
-    public async Task UserLogin()
+    private async Task loginUser()
     {
-        var user = users.Find(u => u.Email == email && u.Password == password);
-
-        if (user != null)
+        try
         {
-            // Redirect based on the user role
-            if (user.Role == "user")
+            var res = await authInterface.Login(user);
+
+            if (!string.IsNullOrWhiteSpace(res.Token))
             {
-                NavigationManager.NavigateTo("/artrazor");
+               
+                await localStorage.SetItemAsStringAsync("authToken", res.Token);
+                await authProvider.GetAuthenticationStateAsync();
+                navigationManager.NavigateTo("/user");
             }
-            else if (user.Role == "admin")
+            else
             {
-                NavigationManager.NavigateTo("/admin");
+                errorMessage = "Invalid credentials. Please check your username and password.";
             }
         }
-        else
+        catch (Exception ex)
         {
-            // Handle invalid credentials
-            Console.WriteLine("Invalid credentials");
+         
+            errorMessage = ex.Message;
         }
     }
-
-    protected override async Task OnInitializedAsync()
-    {
-
-        var jsonContent = await Http.GetFromJsonAsync<List<User>>("sample-data/user.json");
-        if(jsonContent.Any())
-        {
-            users = jsonContent;
-        }
-
-    }
-
-
-   
 }
