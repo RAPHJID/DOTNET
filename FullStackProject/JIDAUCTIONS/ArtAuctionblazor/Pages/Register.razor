@@ -2,18 +2,24 @@
 @inject IAuth authInterface;
 @inject NavigationManager navigationManager
 
-<div class="row m-2 text-light bg-dark">
+
+
+
+<div class="row m-2 text-light bg-dark h-100">
+    
     <div class="col-12 col-md-6">
-        <img class="h-100 w-100" src="https://i.pinimg.com/236x/8f/0f/f7/8f0ff74e6d901f5c87e3530e8393605e.jpg" />
+        <img class="img-fluid h-67 w-100 object-fit-contain" src="https://i.pinimg.com/236x/f4/6b/92/f46b924c93829734af158a2328d3568b.jpg" alt="Responsive Image" />
     </div>
+
 
     <div class="col-12 col-md-6 p-4">
         <h1 class="text-light">Register User</h1>
        @*  Display Success Msg *@
-       @if(successMessage != null)
+        @if (!string.IsNullOrEmpty(successMessage))
         {
             <div class="alert alert-success" role="alert">
                 @successMessage
+                <button class="btn btn-success" @onclick="NavigateToUser">OK</button>
             </div>
         }
 
@@ -46,10 +52,31 @@
                 <ValidationMessage For="@(()=>newUser.PhoneNumber)" />
             </div>
 
-            <div class="form-group p-2">
+            @* <div class="form-group p-2">
                 <label for="password" class="text-light">Password</label>
                 <InputText type="password" class="form-control p-2" id="password" @bind-Value="@newUser.Password" aria-describedby="name" />
                 <ValidationMessage For="@(()=>newUser.Password)" />
+            </div> *@
+
+            <div class="form-group p-2">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <InputText type="@passwordFieldType" class="form-control p-2" id="password" @bind-Value="@newUser.Password" aria-describedby="name" />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" @onclick="TogglePasswordVisibility">
+                            @passwordToggleIcon
+                        </button>
+                    </div>
+                </div>
+                <ValidationMessage For="@(() => newUser.Password)" />
+            </div>
+
+            <div class="form-group p-2">
+                <label for="role" class="text-light">Role</label>
+                <select class="form-control p-2" id="role" @bind="newUser.Role">
+                    <option value="Bidder">Bidder</option>
+                    <option value="Seller">Seller</option>
+                </select>
             </div>
 
             <div class="flex-row m-2">
@@ -67,11 +94,15 @@
     private RegisterRequestDto newUser = new RegisterRequestDto();
     private string successMessage;
     private string errorMessage;
+    private string passwordFieldType = "password";
+    private string passwordToggleIcon = "👁️"; 
 
     private async Task registerUser()
     {
         var res = await authInterface.Register(newUser);
-
+        Console.WriteLine("hello");
+        Console.WriteLine("IsSuccess" + res.IsSuccess);
+        Console.WriteLine("Message" + res.Result);
 
         if(res.IsSuccess)
         {
@@ -79,13 +110,22 @@
             successMessage = "Registration Successfull!!";
             //clear any previous error message
             errorMessage = null;
-            //navigate to discover page
-            navigationManager.NavigateTo("/user");
+            
         }
         else
         {
             errorMessage = "Registration Failled. Please check your info and try again!! ";
             successMessage = null;
         }
+    }
+    private void NavigateToUser()
+    {
+        navigationManager.NavigateTo("/login");
+    }
+
+    private void TogglePasswordVisibility()
+    {
+        passwordFieldType = (passwordFieldType == "password") ? "text" : "password";
+        passwordToggleIcon = (passwordFieldType == "password") ? "👁️" : "👁️‍🗨️"; 
     }
 }

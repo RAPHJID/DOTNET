@@ -44,12 +44,10 @@ namespace ArtAuctionblazor.Services.Auth
 
             var results = JsonConvert.DeserializeObject<ResponseDto>(content);
 
-            if (results.IsSuccess)
-            {
+          
                 return results;
 
-            }
-            return new ResponseDto();
+        
         }
     }
     
