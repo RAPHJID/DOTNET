@@ -1,5 +1,6 @@
 ﻿@inject IJSRuntime JSRuntime
 @using ArtAuctionblazor.Models
+@using ArtAuctionblazor.Models.Arts
 
 <div class="category" id="@Category">
     <h2>@Category</h2>
@@ -74,27 +75,27 @@
 
 
 
-<ArtDetails SelectedArt="selectedArt"/>
+@* <ArtDetails SelectedArt="selectedArt"/> *@
 
 @code {
     [Parameter]
     public string Category { get; set; }
 
     [Parameter]
-    public List<Art> Arts { get; set; } = new List<Art>();
+    public List<ArtDto> Arts { get; set; } = new List<ArtDto>();
 
     [Parameter]
-    public EventCallback<Art> OnArtSelected { get; set; }
+    public EventCallback<ArtDto> OnArtSelected { get; set; }
 
-    IEnumerable<Art> DisplayedArts => Category == "All" ? Arts : Arts.Where(a => a.Category == Category);
+    IEnumerable<ArtDto> DisplayedArts => Category == "All" ? Arts : Arts.Where(a => a.Category == Category);
 
-    public void SelectArt(Art art)
+    public void SelectArt(ArtDto art)
     {
         OnArtSelected.InvokeAsync(art);
     }
-    public Art selectedArt;
+    public ArtDto selectedArt;
     public int currentPage = 1;
-    void BidArt(Art art)
+    void BidArt(ArtDto art)
 
 
 

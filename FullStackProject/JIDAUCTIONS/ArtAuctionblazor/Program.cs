@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using ArtAuctionblazor.Services.Art;
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -18,6 +19,7 @@ builder.Services.AddBlazoredLocalStorage();
 
 //Services
 builder.Services.AddScoped<IAuth, AuthService>();
+builder.Services.AddScoped<IArt, ArtsService>();
 
 //Configuration for AuthProvider
 builder.Services.AddOptions();

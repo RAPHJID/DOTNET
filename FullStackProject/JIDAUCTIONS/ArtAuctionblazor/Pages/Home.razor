@@ -1,21 +1,22 @@
 ﻿@page "/user"
-@inject HttpClient Http
+@using ArtAuctionblazor.Models.Arts
+@using ArtAuctionblazor.Services.Art
+@inject IArt ArtService 
 @inject IJSRuntime _jsRuntime
 
-
 <div class="main">
-    @* NavBar *@
+    <!-- NavBar -->
     <UserNav></UserNav>
-    @* Display Arts *@
+    <!-- Display Arts -->
     <h2>Discover Physical, Digital and NFT artworks</h2>
-    @* categories buttons *@
+    <!-- Categories buttons -->
     <div id="categories">
         @foreach (var category in Categories)
         {
             <button @onclick="(() => ShowCategory(category))">@category</button>
         }
     </div>
-   @if (selectedCategory == "All")
+    @if (selectedCategory == "All")
     {
         <div id="artContainer">
             <div class="all-arts">
@@ -23,23 +24,160 @@
             </div>
         </div>
     }
-    else{
-    <div id="artContainer">              
-        <div class="selected-arts">
-            <MyCategory Category="@selectedCategory" Arts="@Arts" />
+    else
+    {
+        <div id="artContainer">
+            <div class="selected-arts">
+                <div class="artItems">
+                    @if (Arts != null && DisplayedArts.Any())
+                    {
+                        var pageSize = 4; // Number of cards per page
+                        var totalPages = (int)Math.Ceiling(DisplayedArts.Count() / (double)pageSize);
+
+                        for (int page = 1; page <= totalPages; page++)
+                        {
+                            <div class="page @(page == currentPage ? "" : "d-none")">
+                                @foreach (var artDto in DisplayedArts.Skip((page - 1) * pageSize).Take(pageSize))
+                                {
+                                    <div class="card shadow mb-3" style="max-width: 22rem; max-height: 45rem; overflow: hidden;">
+                                        <img src="@artDto.ImageUrl" class="card-img-top" alt="@artDto.Name" style="height: 20rem; object-fit: cover;" />
+                                        <div class="card-body">
+                                            <h5 class="card-title">@artDto.Name</h5>
+                                            <p class="card-text">@artDto.Description</p>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Artist: @artDto.Artist</li>
+                                            <li class="list-group-item">Current Bid: @artDto.CurrentBid</li>
+                                            <li class="list-group-item">End Date: @artDto.EndDate</li>
+                                            <li class="list-group-item">Status: @artDto.Status</li>
+                                        </ul>
+                                        <div class="card-body">
+                                            <label for="bidAmount">Bid Amount:</label>
+                                            <input type="number" id="bidAmount" @bind="artDto.BidAmount" />
+                                        </div>
+                                        <div class="card-body">
+                                            <button type="button" class="btn btn-primary" @onclick="() => BidArt(artDto)">Bid Art</button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        <nav>
+                            <ul class="pagination">
+                                @for (int i = 1; i <= totalPages; i++)
+                                {
+                                    var pageCopy = i; // Copy the value to avoid closure issues
+                                    <li class="page-item @(pageCopy == currentPage ? "active" : "")">
+                                        <a class="page-link" @onclick="() => currentPage = pageCopy">@i</a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    }
+                    else
+                    {
+                        <p>No arts available for this category.</p>
+                    }
+                </div>
+            </div>
         </div>
-    </div>
- 
     }
-    @* <ArtDetails SelectedArt="selectedArt" /> *@
 </div>
 
-
 @code {
-    public List<Art>? Arts { get; set; }
+    [Parameter]
+    public List<ArtDto> Arts { get; set; } = new List<ArtDto>();
     public List<string> Categories { get; set; } = new List<string>();
-    public string selectedCategory = "All"; // default to show all arts
-    public Art selectedArt;
+    public string selectedCategory = "All";
+
+    IEnumerable<ArtDto> DisplayedArts => selectedCategory == "All" ? Arts : Arts.Where(a => a.Category == selectedCategory);
+
+    public async Task LoadDataAsync()
+    {
+        // Fetch ArtDto instances from the database using the ArtService
+        Arts = await ArtService.GetArtsAsync();
+
+        if (Arts != null && Arts.Any())
+        {
+            // Extract unique categories
+            Categories = Arts.Select(a => a.Category).Distinct().ToList();
+        }
+    }
+
+    public void BidArt(ArtDto artDto)
+    {
+        if (artDto.BidAmount > artDto.CurrentBid)
+        {
+            // Update the art's bid amount
+            artDto.CurrentBid = artDto.BidAmount;
+            ShowAlert($"Bid successful! New bid amount: {artDto.CurrentBid}");
+        }
+        else
+        {
+            ShowAlert("Bid amount must be greater than the current bid.");
+        }
+
+        // Reset the bid amount field after bidding
+        artDto.BidAmount = 0;
+    }
+
+    // Helper method to show an alert message
+    void ShowAlert(string message)
+    {
+        _jsRuntime.InvokeVoidAsync("alert", message);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+    }
+
+    public void ShowCategory(string category)
+    {
+        selectedCategory = category;
+    }
+    public void HandleArtSelected(ArtDto art)
+    {
+        selectedArt = art;
+    }
+    public ArtDto selectedArt;
+    public int currentPage = 1;
+}
+
+
+
+@* @code {
+    [Parameter]
+
+    public List<Art> Arts { get; set; } = new List<Art>();
+    public List<string> Categories { get; set; } = new List<string>();
+    public string selectedCategory = "All";
+
+    IEnumerable<Art> DisplayedArts => selectedCategory == "All" ? Arts : Arts.Where(a => a.Category == selectedCategory);
+
+    public void BidArt(Art art)
+    {
+        if (art.BidAmount > art.CurrentBid)
+        {
+            // Update the art's bid amount
+            art.CurrentBid = art.BidAmount;
+            ShowAlert($"Bid successful! New bid amount: {art.CurrentBid}");
+        }
+        else
+        {
+            ShowAlert("Bid amount must be greater than the current bid.");
+        }
+
+        // Reset the bid amount field after bidding
+        art.BidAmount = 0;
+    }
+
+    // Helper method to show an alert message
+    void ShowAlert(string message)
+    {
+        _jsRuntime.InvokeVoidAsync("alert", message);
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,9 +196,14 @@
         selectedCategory = category;
     }
 
-
     public void HandleArtSelected(Art art)
     {
         selectedArt = art;
     }
-}
+
+   
+   /*  public string selectedCategory = "All"; */ // default to show all arts
+    public Art selectedArt;
+    public int currentPage = 1;
+} *@
+

@@ -27,21 +27,35 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Set cors policy
+builder.Services.AddCors(options => options.AddPolicy("policy1", build =>
+{
+
+    build.AllowAnyOrigin();
+    build.AllowAnyHeader();
+    build.AllowAnyMethod();
+}));
+
+builder.AddSwaggenGenExtension();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    if (!app.Environment.IsDevelopment())
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ART API");
+        c.RoutePrefix = string.Empty;
+    }
+});
 
 app.UseHttpsRedirection();
 app.UseMigrations();
 app.UseAuthentication();
 app.UseAuthorization();
 
-
+app.UseCors("policy1");
 app.MapControllers();
 
 app.Run();

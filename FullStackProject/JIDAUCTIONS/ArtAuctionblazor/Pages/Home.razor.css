@@ -79,3 +79,70 @@ button {
 .selected-arts{
     float: right;
 }
+
+/*Added*/
+.artItem {
+    margin: 10px;
+    text-align: center;
+    width: 200px;
+    height: 80vh;
+}
+
+    .artItem img {
+        max-width: 30vw;
+        height: 20vh;
+    }
+
+
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .pagination li {
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+        .pagination li a {
+            display: block;
+            padding: 8px;
+            text-decoration: none;
+        }
+
+        .pagination li.active a {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .pagination li.arrow {
+            font-size: 20px;
+        }
+
+            .pagination li.arrow.prev::before,
+            .pagination li.arrow.next::before {
+                content: '\2190';
+            }
+
+
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.page {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}

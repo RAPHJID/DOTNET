@@ -7,8 +7,9 @@
         public string Description { get; set; }
         public string Artist { get; set; }
         public string? Category { get; set; }
-        public int? StartingPrice { get; set; }
-       /* public int? CurrentBid { get; set; }*/
+        public int StartingPrice { get; set; }
+        public int CurrentBid { get; set; }
+        public int BidAmt { get; set; }
         public string Status { get; set; }
         public string ImageUrl { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Now;
