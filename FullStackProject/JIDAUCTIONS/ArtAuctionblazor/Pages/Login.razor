@@ -3,6 +3,8 @@
 @inject ILocalStorageService localStorage
 @inject AuthenticationStateProvider authProvider
 @inject NavigationManager navigationManager
+@using System.IdentityModel.Tokens.Jwt;
+
 
 
 <div class="container-fluid bg-dark text-light vh-100">
@@ -62,10 +64,22 @@
 
             if (!string.IsNullOrWhiteSpace(res.Token))
             {
-               
                 await localStorage.SetItemAsStringAsync("authToken", res.Token);
                 await authProvider.GetAuthenticationStateAsync();
-                navigationManager.NavigateTo("/user");
+
+                // Decode the JWT token to access claims
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(res.Token) as JwtSecurityToken;
+
+                // Check if the "isAdmin" claim exists and is set to true
+                if (jsonToken?.Claims.Any(c => c.Type == "isAdmin" && c.Value == "true") == true)
+                {
+                    navigationManager.NavigateTo("/admin");
+                }
+                else
+                {
+                    navigationManager.NavigateTo("/user");
+                }
             }
             else
             {
@@ -74,8 +88,8 @@
         }
         catch (Exception ex)
         {
-         
             errorMessage = ex.Message;
         }
     }
+
 }

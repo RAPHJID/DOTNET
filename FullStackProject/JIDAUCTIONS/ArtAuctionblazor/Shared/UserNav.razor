@@ -1,4 +1,9 @@
-﻿<nav class="navbar">
+﻿@inject NavigationManager navigationManager
+@inject AuthenticationStateProvider authProvider
+@inject NavigationManager navigationManager
+@inject ILocalStorageService localStorage
+
+<nav class="navbar">
     <div class="logo">
       <h1>JIDAUCTIONS</h1>
     </div>
@@ -7,10 +12,16 @@
         <button type="submit">Search</button>
     </div>
     <ul class="nav-links">
+        <AuthorizeView>
+            <Authorized>
         <li><a href="/seller">Sell</a></li>
+        <li><a href="/mybids">My Account</a></li>
+        </Authorized>
+         <NotAuthorized>
         <li><a href="/register">Register</a></li>
         <li><a href="/login">Login</a></li>
-        <li><a href="/mybids">My Account</a></li>
+         </NotAuthorized>
+        </AuthorizeView>
     </ul>
     
 </nav>

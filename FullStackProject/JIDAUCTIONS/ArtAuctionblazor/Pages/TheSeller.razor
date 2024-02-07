@@ -1,59 +1,153 @@
-﻿@page "/uploadart"
-<div class="body">
-<NavMenu></NavMenu>
+﻿@page "/product/add"
+@page "/product/update/{id}"
+@using ArtAuctionblazor.Models.Arts
+@using ArtAuctionblazor.Services.Art
+@attribute [Authorize]
+
+@inject NavigationManager navigationManager
+@inject IArt artInterface;
+
+<div class="container mt-4">
 <div class="row">
-    <div class="col-4">
-        @* <AddArt></AddArt> *@
-        <AddArtV2 OnAddNewArt="AddNewArt"></AddArtV2>
+    <div class="col-lg-6">
+        @if (string.IsNullOrWhiteSpace(art.ImageUrl))
+        {
+            <img class="h-70 w-100" src="https://i.pinimg.com/236x/00/06/d3/0006d3c12106e98621f1ef3c94d02029.jpg" />
+        }
+        else
+        {
+            <img class="h-70 w-100" src="@art.ImageUrl" />
+        }
     </div>
 
-    <div class="col-8">
-        <div class="row">
-            @foreach (var art in arts)
-            {
-                <SingleArt art="art"></SingleArt>
-            }
+    <div class="col-lg-6">
+        @if (string.IsNullOrWhiteSpace(art.Name))
+        {
+            <h1> Add Art</h1>
+        }
+        else
+        {
+            <h1> Update Art</h1>
+        }
+
+        <div class="container mt-4">
+            <form @onsubmit="AddUpdateProduct" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" @bind="art.Name" required />
+                            <div class="invalid-feedback">
+                                Please enter the name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" @bind="art.Description" required />
+                            <div class="invalid-feedback">
+                                Please enter the description.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" id="category" @bind="art.Category" required />
+                            <div class="invalid-feedback">
+                                Please enter the category name.
+                            </div>
+                        </div>
+                    </div>
+                        <div class="mb-3">
+                            <label for="artist" class="form-label">Artist</label>
+                            <input type="text" class="form-control" id="artist" @bind="art.Artist" required />
+                            <div class="invalid-feedback">
+                                Please enter the artist's name.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="artist" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="artist" @bind="art.Status" required />
+                            <div class="invalid-feedback">
+                                Please enter the artist's name.
+                            </div>
+                        </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" @bind="art.Price" required />
+                            <div class="invalid-feedback">
+                                Please enter a valid price.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="imageUrl" class="form-label">Image URL</label>
+                    <input type="text" class="form-control" id="imageUrl" @bind="art.ImageUrl" required />
+                    <div class="invalid-feedback">
+                        Please enter a valid image URL.
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add/Update Art</button>
+            </form>
         </div>
+</div>
+
     </div>
 </div>
-</div>
+
 @code {
 
-    public List<Art> arts = new List<Art>()
-    {
-        new Art()
-        {
-            Id=1,
-            Name="Abstract Painting",
-            Description="Vibrant colors and unique patterns",
-            Artist="John Doe",
-            Category="Abstract",
-            StartingPrice=500,
-            CurrentBid=700,
-            Status="Available",
-            BidAmount=0,
-            ImageUrl="https://i.pinimg.com/236x/14/ce/5e/14ce5e867add3a47452596cd9d27fdcc.jpg",
-            EndDate=DateTime.Now.AddDays(7)
-        },
-        new Art()
-        {
-            Id=2,
-            Name="Sculpture",
-            Description="Beautifully carved sculpture from marble",
-            Artist="Jane Smith",
-            Category="Sculpture",
-            StartingPrice=1000,
-            CurrentBid=1200,
-            Status="Available",
-            BidAmount=0,
-            ImageUrl="https://i.pinimg.com/236x/eb/e7/59/ebe759bfa5403bf871c57f8e350f63a8.jpg",
-            EndDate=DateTime.Now.AddDays(10)
-        },     
-    };
 
-    public void AddNewArt(Art newArt)
+
+    [Parameter]
+    public string Id { get; set; }
+
+    List<ArtDto> artsList = new List<ArtDto>();
+
+    ArtDto art = new ArtDto();
+    private async Task AddUpdateProduct()
     {
-        newArt.Id = arts.Count + 1;
-        arts.Add(newArt);
+        ArtRequestDto theart = new ArtRequestDto
+
+            {
+                ImageUrl = art.ImageUrl,
+                Name = art.Name,
+                Description = art.Description,
+                Price = art.Price,
+                Category = art.Category,
+                Status = art.Status,
+                Artist = art.Artist
+            };
+
+        if (art.ArtId == Guid.Empty || art.ArtId == null)
+        {
+            var res = await artInterface.AddArt(theart);
+            //navigationManager.NavigateTo("");
+        }
+        else
+        {
+            //update
+            var res = await artInterface.updateArt(art.ArtId, theart);
+            //navigationManager.NavigateTo("");
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(Id))
+        {
+            art = await artInterface.GetArtByIdAsync(Guid.Parse(Id));  
+        }
+
     }
 }

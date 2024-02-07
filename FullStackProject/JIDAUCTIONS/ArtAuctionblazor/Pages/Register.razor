@@ -52,11 +52,6 @@
                 <ValidationMessage For="@(()=>newUser.PhoneNumber)" />
             </div>
 
-            @* <div class="form-group p-2">
-                <label for="password" class="text-light">Password</label>
-                <InputText type="password" class="form-control p-2" id="password" @bind-Value="@newUser.Password" aria-describedby="name" />
-                <ValidationMessage For="@(()=>newUser.Password)" />
-            </div> *@
 
             <div class="form-group p-2">
                 <label for="password">Password</label>
@@ -100,9 +95,7 @@
     private async Task registerUser()
     {
         var res = await authInterface.Register(newUser);
-        Console.WriteLine("hello");
-        Console.WriteLine("IsSuccess" + res.IsSuccess);
-        Console.WriteLine("Message" + res.Result);
+        
 
         if(res.IsSuccess)
         {
