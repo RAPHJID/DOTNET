@@ -23,7 +23,7 @@ namespace ArtAuctionblazor.Models.Arts
         public string ImageUrl { get; set; }
       
         public DateTime StartDate { get; set; } = DateTime.Now;
-       
-       /* public DateTime EndDate { get; set; } = DateTime.Now.AddDays(7);*/
+
+        public DateTime EndDate { get; set; } = DateTime.Now.AddDays(7);
     }
 }

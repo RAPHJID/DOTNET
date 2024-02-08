@@ -1,4 +1,4 @@
-﻿@page "/product/add"
+﻿@page "/uploadart"
 @page "/product/update/{id}"
 @using ArtAuctionblazor.Models.Arts
 @using ArtAuctionblazor.Services.Art
@@ -8,102 +8,148 @@
 @inject IArt artInterface;
 
 <div class="container mt-4">
-<div class="row">
-    <div class="col-lg-6">
-        @if (string.IsNullOrWhiteSpace(art.ImageUrl))
-        {
-            <img class="h-70 w-100" src="https://i.pinimg.com/236x/00/06/d3/0006d3c12106e98621f1ef3c94d02029.jpg" />
-        }
-        else
-        {
-            <img class="h-70 w-100" src="@art.ImageUrl" />
-        }
-    </div>
+    <div class="card mb-3" style="min-height: 70vh;">
+        <div class="row g-0">
+            <div class="col-lg-6">
+                @if (string.IsNullOrWhiteSpace(art.ImageUrl))
+                {
+                    <img class="img-fluid" src="https://i.pinimg.com/236x/00/06/d3/0006d3c12106e98621f1ef3c94d02029.jpg" />
+                }
+                else
+                {
+                    <img class="img-fluid" src="@art.ImageUrl" />
+                }
+            </div>
 
-    <div class="col-lg-6">
-        @if (string.IsNullOrWhiteSpace(art.Name))
-        {
-            <h1> Add Art</h1>
-        }
-        else
-        {
-            <h1> Update Art</h1>
-        }
+            <div class="col-lg-6">
+                @if (string.IsNullOrWhiteSpace(art.Name))
+                {
+                    <h1 class="display-4">Add Art</h1>
+                }
+                else
+                {
+                    <h1 class="display-4">Update Art</h1>
+                }
 
-        <div class="container mt-4">
-            <form @onsubmit="AddUpdateProduct" class="needs-validation" novalidate>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" @bind="art.Name" required />
-                            <div class="invalid-feedback">
-                                Please enter the name.
+                <form @onsubmit="AddUpdateProduct" class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" @bind="art.Name" required />
+                                <div class="invalid-feedback">
+                                    Please enter the name.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <input type="text" class="form-control" id="description" @bind="art.Description" required />
+                                <div class="invalid-feedback">
+                                    Please enter the description.
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="description" @bind="art.Description" required />
-                            <div class="invalid-feedback">
-                                Please enter the description.
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="category" class="form-label">Category Name</label>
+                                <input type="text" class="form-control" id="category" @bind="art.Category" required />
+                                <div class="invalid-feedback">
+                                    Please enter the category name.
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="category" @bind="art.Category" required />
-                            <div class="invalid-feedback">
-                                Please enter the category name.
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="artist" class="form-label">Artist</label>
+                                <input type="text" class="form-control" id="artist" @bind="art.Artist" required />
+                                <div class="invalid-feedback">
+                                    Please enter the artist's name.
+                                </div>
                             </div>
                         </div>
                     </div>
-                        <div class="mb-3">
-                            <label for="artist" class="form-label">Artist</label>
-                            <input type="text" class="form-control" id="artist" @bind="art.Artist" required />
-                            <div class="invalid-feedback">
-                                Please enter the artist's name.
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="artist" class="form-label">Status</label>
-                            <input type="text" class="form-control" id="artist" @bind="art.Status" required />
-                            <div class="invalid-feedback">
-                                Please enter the artist's name.
-                            </div>
-                        </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="number" class="form-control" id="price" @bind="art.Price" required />
-                            <div class="invalid-feedback">
-                                Please enter a valid price.
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="mb-3">
-                    <label for="imageUrl" class="form-label">Image URL</label>
-                    <input type="text" class="form-control" id="imageUrl" @bind="art.ImageUrl" required />
-                    <div class="invalid-feedback">
-                        Please enter a valid image URL.
-                    </div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="status" @bind="art.Status" required />
+                                <div class="invalid-feedback">
+                                    Please enter the status.
+                                </div>
+                            </div>
+                        </div>
+                        @* <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="endDate" @bind="art.EndDate" required />
+                                <div class="invalid-feedback">
+                                    Please enter the end date.
+                                </div>
+                            </div>
+                        </div> *@
 
-                <button type="submit" class="btn btn-primary">Add/Update Art</button>
-            </form>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Price</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="price" @bind="art.CurrentBid" required />
+                                    <div class="invalid-feedback">
+                                        Please enter a valid price.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imageUrl" class="form-label">Image URL</label>
+                        <input type="text" class="form-control" id="imageUrl" @bind="art.ImageUrl" required />
+                        <div class="invalid-feedback">
+                            Please enter a valid image URL.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add/Update Art</button>
+                </form>
+            </div>
         </div>
-</div>
+    </div>
 
+    <div class="card mt-4" style="min-height: 40vh;">
+        <div class="card-body">
+            <h2 class="card-title">Art List</h2>
+            <div class="row">
+                @foreach (var artItem in artsList)
+                {
+                    <div class="col-lg-4 mb-4">
+                        <div class="card">
+                            <img class="card-img-top" src="@artItem.ImageUrl" alt="@artItem.Name">
+                            <div class="card-body">
+                                <h5 class="card-title">@artItem.Name</h5>
+                                <p class="card-text">@artItem.Description</p>
+                                <p class="card-text"><small class="text-muted">@artItem.Category</small></p>
+                                <p class="card-text"><small class="text-muted">Artist: @artItem.Artist</small></p>
+                                <p class="card-text"><small class="text-muted">Price: $@artItem.CurrentBid</small></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 </div>
+
 
 @code {
 
@@ -123,24 +169,28 @@
                 ImageUrl = art.ImageUrl,
                 Name = art.Name,
                 Description = art.Description,
-                Price = art.Price,
+                Price = art.CurrentBid,
                 Category = art.Category,
                 Status = art.Status,
-                Artist = art.Artist
+                Artist = art.Artist,
+                EndDate = art.EndDate
             };
 
         if (art.ArtId == Guid.Empty || art.ArtId == null)
         {
             var res = await artInterface.AddArt(theart);
-            //navigationManager.NavigateTo("");
+            navigationManager.NavigateTo("/user");
         }
         else
         {
             //update
             var res = await artInterface.updateArt(art.ArtId, theart);
-            //navigationManager.NavigateTo("");
+            navigationManager.NavigateTo("/user");
         }
     }
+
+
+
 
     protected override async Task OnParametersSetAsync()
     {

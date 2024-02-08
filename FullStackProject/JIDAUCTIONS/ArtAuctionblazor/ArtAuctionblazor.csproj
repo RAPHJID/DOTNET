@@ -54,4 +54,8 @@
     <UpToDateCheckInput Remove="Pages\Dummy.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Bids\" />
+  </ItemGroup>
+
 </Project>
